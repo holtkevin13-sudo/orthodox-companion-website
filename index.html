@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orthodox Companion</title>
+
+<style>
+:root {
+  --gold-bg: #e8d7a5;
+  --gold-light: #f3e4b8;
+  --gold-accent: #caa24c;
+
+  --blue-deep: #2c4a78;
+  --blue-light: #4f76b3;
+
+  --red-deep: #8b2d2d;
+
+  --text-dark: #2a1a0a;
+  --text-soft: #5a4525;
+
+  --panel: rgba(255,255,255,0.6);
+}
+
+body {
+  margin:0;
+  font-family: Georgia, serif;
+  background: linear-gradient(180deg, var(--gold-light), var(--gold-bg));
+  color: var(--text-dark);
+}
+
+/* HEADER */
+header {
+  text-align:center;
+  padding:30px 20px 10px;
+}
+
+.cross {
+  font-size: 28px;
+  color: var(--gold-accent);
+}
+
+h1 {
+  margin:10px 0 0;
+  font-size: 2.2rem;
+}
+
+.subtitle {
+  margin-top:10px;
+  font-style: italic;
+  color: var(--text-soft);
+}
+
+/* NAV */
+nav {
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  padding:10px;
+}
+
+button.tab {
+  padding:10px 16px;
+  border:none;
+  background: var(--blue-deep);
+  color:white;
+  cursor:pointer;
+}
+
+button.tab.active {
+  background: var(--red-deep);
+}
+
+/* SECTIONS */
+.section {
+  display:none;
+  max-width:900px;
+  margin:20px auto;
+  padding:20px;
+}
+
+.section.active {
+  display:block;
+}
+
+/* PROMPTS */
+.prompt {
+  display:block;
+  width:100%;
+  padding:14px;
+  margin:10px 0;
+  background: white;
+  border:1px solid var(--gold-accent);
+  cursor:pointer;
+  text-align:left;
+}
+
+/* CHAT */
+.chat-box {
+  border:1px solid var(--gold-accent);
+  background: var(--panel);
+  padding:15px;
+  height:400px;
+  overflow-y:auto;
+}
+
+.msg {
+  margin:10px 0;
+  padding:10px;
+}
+
+.user {
+  background: var(--blue-light);
+  color:white;
+  text-align:right;
+}
+
+.bot {
+  background:white;
+}
+
+.input-row {
+  display:flex;
+  margin-top:10px;
+}
+
+input {
+  flex:1;
+  padding:10px;
+}
+
+.send {
+  padding:10px 16px;
+  background: var(--blue-deep);
+  color:white;
+  border:none;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="cross">☦</div>
+  <h1>Come and See</h1>
+  <div class="subtitle">
+    Ask anything about the Orthodox Christian faith — doctrine, feasts,
+    the Church Fathers, prayer, icons, Greek terms, or how to begin the journey.
+  </div>
+</header>
+
+<nav>
+  <button class="tab active" onclick="switchTab('home')">Home</button>
+  <button class="tab" onclick="switchTab('chat')">Chat</button>
+</nav>
+
+<!-- HOME -->
+<div id="home" class="section active">
+
+  <button class="prompt" onclick="askPrompt('What is theosis?')">
+    What is Theosis?
+  </button>
+
+  <button class="prompt" onclick="askPrompt('Tell me about Pascha.')">
+    Tell me about the Feast of Pascha
+  </button>
+
+  <button class="prompt" onclick="askPrompt('What did the Church Fathers teach on salvation?')">
+    What did the early Church Fathers teach on salvation?
+  </button>
+
+  <button class="prompt" onclick="askPrompt('What is the Jesus Prayer?')">
+    What is the Jesus Prayer?
+  </button>
+
+  <button class="prompt" onclick="askPrompt('What is celebrated today?')">
+    What is the Church celebrating today?
+  </button>
+
+</div>
+
+<!-- CHAT -->
+<div id="chat" class="section">
+
+  <div id="chatBox" class="chat-box">
+    <div class="msg bot">Welcome. Backend connection ready.</div>
+  </div>
+
+  <div class="input-row">
+    <input id="input" placeholder="Ask a question...">
+    <button class="send" onclick="send()">Send</button>
+  </div>
+
+</div>
+
+<script>
+
+function switchTab(tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function addMsg(text, cls) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + cls;
+  div.innerText = text;
+  document.getElementById('chatBox').appendChild(div);
+}
+
+function askPrompt(text) {
+  switchTab('chat');
+  document.getElementById('input').value = text;
+}
+
+async function send() {
+  const input = document.getElementById('input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMsg(text, 'user');
+  input.value = '';
+
+  const res = await fetch('/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: text })
+  });
+
+  const data = await res.json();
+  addMsg(data.response, 'bot');
+}
+
+</script>
+
+</body>
+</html>

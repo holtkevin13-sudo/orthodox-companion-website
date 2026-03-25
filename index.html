@@ -1,239 +1,2083 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Orthodox Companion</title>
-
+<link rel="icon" href="cross.png" type="image/png"/>
+<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+<link rel="manifest" href="manifest.json"/>
+<meta name="theme-color" content="#0A1628"/>
+<meta property="og:title" content="Orthodox Companion"/>
+<meta property="og:description" content="An Orthodox Christian companion for understanding and living the faith — doctrine, feasts, the Church Fathers, prayer, and icons."/>
+<meta property="og:url" content="https://holtkevin13-sudo.github.io/orthodox-companion-/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="https://holtkevin13-sudo.github.io/orthodox-companion-/og-image.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Orthodox Companion"/>
+<meta name="twitter:description" content="An Orthodox Christian companion for understanding and living the faith."/>
+<meta name="twitter:image" content="https://holtkevin13-sudo.github.io/orthodox-companion-/og-image.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --gold-bg: #e8d7a5;
-  --gold-light: #f3e4b8;
-  --gold-accent: #caa24c;
-
-  --blue-deep: #2c4a78;
-  --blue-light: #4f76b3;
-
-  --red-deep: #8b2d2d;
-
-  --text-dark: #2a1a0a;
-  --text-soft: #5a4525;
-
-  --panel: rgba(255,255,255,0.6);
-}
-
-body {
-  margin:0;
-  font-family: Georgia, serif;
-  background: linear-gradient(180deg, var(--gold-light), var(--gold-bg));
-  color: var(--text-dark);
-}
-
-/* HEADER */
-header {
-  text-align:center;
-  padding:30px 20px 10px;
-}
-
-.cross {
-  font-size: 28px;
-  color: var(--gold-accent);
-}
-
-h1 {
-  margin:10px 0 0;
-  font-size: 2.2rem;
-}
-
-.subtitle {
-  margin-top:10px;
-  font-style: italic;
-  color: var(--text-soft);
-}
-
-/* NAV */
-nav {
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{
+  font-family:'EB Garamond',Georgia,serif;
+  background:#0A1628;
+  color:#F0E6CC;
   display:flex;
-  justify-content:center;
-  gap:10px;
-  padding:10px;
+  flex-direction:column;
+  height:100vh;
+  overflow:hidden;
 }
-
-button.tab {
-  padding:10px 16px;
-  border:none;
-  background: var(--blue-deep);
-  color:white;
+:root{
+  --gold:#C9A84C;--gold-light:#E8CB7A;--gold-dim:#8A6A28;
+  --deep:#0A1628;--dark:#0F2035;--panel:#1B3A6B;--panel-light:#2A4A7A;
+  --border:#2A5A9C;--text:#F0E6CC;--text-dim:#B8C8DC;
+  --red:#7A1A1A;--red-light:#9B2828;
+}
+header{
+  flex-shrink:0;
+  background:#0F2035;
+  border-bottom:1px solid #2A5A8C;
+  padding:14px 24px;
+  display:flex;align-items:center;gap:16px;
   cursor:pointer;
+  box-shadow:0 2px 20px rgba(0,0,0,0.5);
 }
-
-button.tab.active {
-  background: var(--red-deep);
+.cross-icon{font-size:48px;color:#C9A84C;text-shadow:0 0 22px rgba(201,168,76,0.45);flex-shrink:0;font-family:"Segoe UI Symbol","Apple Symbols",serif;font-style:normal;}
+/* Force all Orthodox crosses to render as text not emoji */
+.cross-icon span, .lc-cross span, .avatar span {
+  font-family: "Segoe UI Symbol","Apple Symbols","Arial Unicode MS",serif !important;
+  font-style: normal !important;
+  -webkit-font-variant-emoji: text !important;
+  font-variant-emoji: text !important;
 }
-
-/* SECTIONS */
-.section {
-  display:none;
-  max-width:900px;
-  margin:20px auto;
-  padding:20px;
-}
-
-.section.active {
-  display:block;
-}
-
-/* PROMPTS */
-.prompt {
-  display:block;
-  width:100%;
-  padding:14px;
-  margin:10px 0;
-  background: white;
-  border:1px solid var(--gold-accent);
-  cursor:pointer;
-  text-align:left;
-}
-
-/* CHAT */
-.chat-box {
-  border:1px solid var(--gold-accent);
-  background: var(--panel);
-  padding:15px;
-  height:400px;
-  overflow-y:auto;
-}
-
-.msg {
-  margin:10px 0;
-  padding:10px;
-}
-
-.user {
-  background: var(--blue-light);
-  color:white;
-  text-align:right;
-}
-
-.bot {
-  background:white;
-}
-
-.input-row {
-  display:flex;
-  margin-top:10px;
-}
-
-input {
+.lc-cross span, .avatar span { color: #C9A84C !important; }
+.cross-icon span { color: #C9A84C !important; }
+.cross-icon,.lc-cross,.welcome .cross-large,.avatar{font-variant-emoji:text;-webkit-font-variant-emoji:text;}
+@font-face{font-family:'OrthodoxSymbols';src:local('Segoe UI Symbol'),local('Apple Symbols'),local('DejaVu Sans');}
+.header-text h1{font-family:'Cinzel',serif;font-size:1.25rem;font-weight:700;color:#E8F0F8;letter-spacing:0.08em;}
+.header-text p{font-size:0.78rem;color:#B8C8DC;font-style:italic;margin-top:2px;}
+.header-ornament{margin-left:auto;color:#B8C8DC;font-size:1.1rem;letter-spacing:4px;opacity:0.6;}
+#chat{
   flex:1;
-  padding:10px;
+  min-height:0;
+  overflow-y:auto;
+  padding:24px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+  overscroll-behavior:contain;
 }
-
-.send {
-  padding:10px 16px;
-  background: var(--blue-deep);
-  color:white;
-  border:none;
+#chat::-webkit-scrollbar{width:8px;}
+#chat::-webkit-scrollbar-track{background:rgba(27,58,107,0.3);}
+#chat::-webkit-scrollbar-thumb{background:#2A5A9C;border-radius:4px;}
+#chat::-webkit-scrollbar-thumb:hover{background:#4A7AB8;}
+.input-area{
+  flex-shrink:0;
+  background:linear-gradient(0deg,#060E1A,#0F2035);
+  border-top:1px solid #2A5A9C;
+  padding:14px 16px;
+  box-shadow:0 -2px 20px rgba(0,0,0,0.35);
 }
+.input-row{display:flex;gap:10px;max-width:820px;margin:0 auto;align-items:flex-end;}
+textarea{
+  flex:1;background:#1B3A6B;border:1px solid #2A5A9C;border-radius:3px;
+  color:#F0E6CC;font-family:'EB Garamond',serif;font-size:1rem;
+  padding:10px 14px;resize:none;min-height:44px;max-height:140px;
+  line-height:1.5;outline:none;transition:border-color 0.2s;
+  -webkit-user-select:text;user-select:text;
+  touch-action:manipulation;
+}
+textarea:focus{border-color:#4A7AB8;}
+textarea::placeholder{color:#B8C8DC;font-style:italic;}
+#sendBtn{
+  width:44px;height:44px;flex-shrink:0;
+  background:linear-gradient(135deg,#2A5A9C,#1B3A6B);
+  border:1px solid #2A5A9C;border-radius:3px;
+  color:#E8CB7A;font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+#sendBtn:hover{background:linear-gradient(135deg,#4A7AB8,#2A5A9C);}
+#sendBtn:disabled{opacity:0.4;cursor:not-allowed;}
+.input-footer{text-align:center;font-size:0.7rem;color:#4A7AB8;margin-top:8px;letter-spacing:0.04em;opacity:0.7;}
+.dbg-btn{cursor:pointer;background:rgba(201,168,76,0.15);border:1px solid #4A7AB8;color:#C9A84C;font-size:0.65rem;padding:3px 10px;border-radius:2px;font-family:inherit;margin-left:6px;}
+.msg{display:flex;gap:12px;max-width:820px;width:100%;margin:0 auto;animation:fadeUp 0.3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.msg.user{flex-direction:row-reverse;}
+.avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;margin-top:2px;}
+.msg.assistant .avatar{background:#1B3A6B;border:1px solid #2A5A9C;color:#C9A84C;}
+.msg.user .avatar{background:#1A3A5C;border:1px solid #2A5A8C;color:#E8F0F8;font-size:14px;}
+.bubble{padding:14px 18px;border-radius:4px;line-height:1.75;font-size:1rem;max-width:calc(100% - 52px);}
+.msg.assistant .bubble{background:#1B3A6B;border:1px solid #2A5A9C;border-left:3px solid #4A7AB8;color:#F5EED8;box-shadow:0 2px 12px rgba(0,0,0,0.25);font-size:1.05rem;line-height:1.8;}
+.msg.user .bubble{background:#0F2035;border:1px solid #1A3A5C;border-right:3px solid #2A5A8C;color:#E8F0F8;text-align:right;}
+.bubble h3{font-family:'Cinzel',serif;font-size:0.9rem;color:#C9A84C;letter-spacing:0.06em;margin:14px 0 6px;text-transform:uppercase;font-weight:600;}
+.bubble h3:first-child{margin-top:0;}
+.bubble p{margin-bottom:10px;}
+.bubble p:last-child{margin-bottom:0;}
+.bubble blockquote{border-left:2px solid #4A7AB8;padding:6px 12px;margin:10px 0;color:#B8C8DC;font-style:italic;background:rgba(201,168,76,0.06);}
+.bubble .attribution{font-size:0.85rem;color:#4A7AB8;margin-top:-6px;margin-bottom:10px;}
+.bubble .greek-term{color:#E8CB7A;font-style:italic;}
+.bubble hr.section-divider{border:none;border-top:1px solid #2A5A9C;margin:12px 0;opacity:0.5;}
+.icon-row{display:none;}
+.icon-item{display:none;}
+.icon-item img{width:120px;height:150px;object-fit:cover;border:2px solid #2A5A9C;border-radius:3px;background:#1B3A6B;}
+.icon-item .icon-caption{font-size:0.72rem;color:#B8C8DC;text-align:center;font-style:italic;line-height:1.3;}
+.suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.suggestion-chip{padding:7px 16px;border:1px solid #2A5A9C;border-radius:2px;font-size:0.92rem;color:#B8C8DC;cursor:pointer;background:transparent;font-style:italic;font-family:'EB Garamond',serif;transition:all 0.2s;white-space:normal;text-align:left;}
+.suggestion-chip:hover{border-color:#4A7AB8;color:#C9A84C;background:rgba(42,90,156,0.12);}
+.welcome{text-align:center;padding:40px 20px 20px;max-width:560px;margin:0 auto;animation:fadeUp 0.6s ease;}
+.welcome .cross-large{font-size:42px;color:#C9A84C;text-shadow:0 0 20px rgba(201,168,76,0.3);margin-bottom:16px;display:block;font-family:"Segoe UI Symbol","Apple Symbols",serif;font-style:normal;}
+.welcome h2{font-family:'Cinzel',serif;font-size:1.4rem;color:#E8CB7A;letter-spacing:0.06em;margin-bottom:10px;}
+.welcome p{color:#B8C8DC;font-size:0.95rem;line-height:1.7;font-style:italic;margin-bottom:24px;}
+.starter-questions{display:flex;flex-direction:column;gap:8px;text-align:left;}
+.starter-btn{padding:11px 16px;background:rgba(201,168,76,0.06);border:1px solid #2A5A9C;border-left:3px solid #4A7AB8;color:#F0E6CC;font-family:'EB Garamond',serif;font-size:0.95rem;cursor:pointer;text-align:left;border-radius:2px;transition:all 0.2s;width:100%;display:block;}
+.starter-btn:hover{background:rgba(42,90,156,0.22);border-left-color:#C9A84C;color:#FAF5E8;}
+.starter-arrow{color:#4A7AB8;font-size:0.8rem;opacity:0.7;float:right;}
+.starter-divider{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.starter-divider::before,.starter-divider::after{content:'';flex:1;border-top:1px solid rgba(42,90,156,0.5);}
+.starter-divider-text{font-family:'Cinzel',serif;font-size:0.65rem;color:#4A7AB8;text-transform:uppercase;letter-spacing:0.14em;white-space:nowrap;}
+.enter-hint{display:flex;align-items:center;gap:10px;margin-top:12px;}
+.enter-hint::before,.enter-hint::after{content:'';flex:1;border-top:1px solid rgba(42,90,156,0.3);}
+.enter-hint-text{font-family:'EB Garamond',serif;font-size:0.82rem;color:#4A7AB8;font-style:italic;white-space:nowrap;}
+.loading-msg{display:flex;gap:12px;max-width:820px;width:100%;margin:0 auto;}
+.loading-dots{display:flex;align-items:center;padding:14px 18px;background:#1B3A6B;border:1px solid #2A5A9C;border-left:3px solid #4A7AB8;border-radius:4px;}
+.loading-text{color:#4A7AB8;font-family:'EB Garamond',serif;font-style:italic;font-size:0.95rem;animation:fadePulse 2s ease-in-out infinite;}
+@keyframes fadePulse{0%,100%{opacity:0.4;}50%{opacity:1;}}
+.error-bubble{background:rgba(139,32,32,0.15)!important;border-left-color:#B33030!important;color:#D08080!important;}
+.liturgical-card{background:linear-gradient(160deg,#0F2035,#1B3A6B);border:1px solid #2A5A9C;border-top:3px solid #C9A84C;border-radius:4px;overflow:hidden;width:100%;}
+.lc-header{display:flex;align-items:center;gap:14px;padding:16px 18px 12px;border-bottom:1px solid rgba(201,168,76,0.2);background:rgba(0,0,0,0.2);}
+.lc-cross{font-size:28px;color:#C9A84C;flex-shrink:0;}
+.lc-date{font-size:0.75rem;color:#B8C8DC;letter-spacing:0.06em;text-transform:uppercase;font-family:'Cinzel',serif;margin-bottom:3px;}
+.lc-primary-feast{font-family:'Cinzel',serif;font-size:1rem;color:#E8CB7A;font-weight:600;line-height:1.3;}
+.lc-meta-row{display:flex;flex-wrap:wrap;gap:8px;padding:10px 18px;border-bottom:1px solid rgba(201,168,76,0.1);}
+.lc-meta-chip{font-size:0.78rem;color:#B8C8DC;background:rgba(42,90,156,0.15);border:1px solid rgba(201,168,76,0.2);border-radius:2px;padding:3px 10px;}
+.lc-section{padding:12px 18px;border-bottom:1px solid rgba(201,168,76,0.1);}
+.lc-section:last-child{border-bottom:none;}
+.lc-section-title{font-family:'Cinzel',serif;font-size:0.72rem;color:#C9A84C;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;}
+.lc-feast-item{font-size:0.9rem;color:#F0E6CC;padding:3px 0;font-style:italic;}
+.lc-saints-grid{display:none;}
+.lc-saint-item{display:none;}
+.lc-saint-icon{display:none;}
+.lc-saint-placeholder{display:none;}
+.lc-saint-name{font-size:0.85rem;color:#F0E6CC;line-height:1.4;font-style:normal;}
+.lc-readings{display:flex;flex-direction:column;gap:6px;}
+.lc-reading-item{display:flex;gap:10px;align-items:baseline;font-size:0.88rem;}
+.lc-reading-type{font-family:'Cinzel',serif;font-size:0.68rem;color:#E8CB7A;text-transform:uppercase;letter-spacing:0.06em;flex-shrink:0;min-width:60px;}
+.lc-reading-ref{color:#F0E6CC;font-style:italic;}/* Chat Modes /
+.mode-bar{display:flex;gap:6px;max-width:820px;margin:0 auto 8px;padding:0 2px;}
+.mode-btn{padding:5px 14px;border-radius:20px;font-family:‘EB Garamond’,serif;font-size:0.82rem;cursor:pointer;border:1px solid #2A5A9C;background:transparent;color:#B8C8DC;transition:all 0.2s;font-style:italic;}
+.mode-btn.active{background:rgba(201,168,76,0.15);border-color:#C9A84C;color:#E8CB7A;}
+.mode-btn:hover{border-color:#4A7AB8;color:#C9A84C;}
+/ Copy button /
+.copy-btn{display:inline-flex;align-items:center;gap:4px;margin-top:10px;padding:4px 10px;background:transparent;border:1px solid #2A5A9C;border-radius:2px;color:#4A7AB8;font-size:0.72rem;cursor:pointer;font-family:‘Cinzel’,serif;letter-spacing:0.05em;transition:all 0.2s;}
+.copy-btn:hover{border-color:#C9A84C;color:#C9A84C;}
+/ Feast banner /
+.feast-banner{background:linear-gradient(90deg,rgba(42,90,156,0.15),rgba(201,168,76,0.15),rgba(42,90,156,0.15));border-bottom:1px solid rgba(201,168,76,0.2);padding:7px 24px;text-align:center;font-family:‘Cinzel’,serif;font-size:0.75rem;color:#E8CB7A;letter-spacing:0.06em;display:none;}
+.feast-banner.visible{display:block;}
+/ Icon modal /
+.icon-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:500;background:rgba(0,0,0,0.88);align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:12px;}
+.icon-modal.open{display:flex;}
+.icon-modal img{max-width:88vw;max-height:80vh;object-fit:contain;border:2px solid #4A7AB8;border-radius:4px;box-shadow:0 0 40px rgba(201,168,76,0.25);}
+.icon-modal-caption{color:#B8C8DC;font-family:‘EB Garamond’,serif;font-style:italic;font-size:0.9rem;text-align:center;}
+.icon-item img{cursor:pointer;}
+/ Audio / Save buttons /
+.audio-btn,.save-btn{display:inline-flex;align-items:center;gap:4px;margin-top:10px;margin-left:6px;padding:4px 10px;background:transparent;border:1px solid #2A5A9C;border-radius:2px;color:#4A7AB8;font-size:0.72rem;cursor:pointer;font-family:‘Cinzel’,serif;letter-spacing:0.05em;transition:all 0.2s;}
+.audio-btn:hover,.save-btn:hover{border-color:#C9A84C;color:#C9A84C;}
+.save-btn.saved{border-color:#4A7AB8;color:#C9A84C;}
+/ Saved responses list /
+.saved-item{padding:10px 14px;border:1px solid #2A5A9C;border-radius:3px;margin-bottom:8px;background:rgba(27,58,107,0.3);}
+.saved-item-q{font-family:‘Cinzel’,serif;font-size:0.75rem;color:#C9A84C;margin-bottom:4px;letter-spacing:0.04em;}
+.saved-item-preview{font-size:0.85rem;color:#B8C8DC;font-style:italic;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.saved-item-actions{display:flex;gap:8px;margin-top:6px;align-items:center;}
+.saved-action-btn{font-size:0.7rem;color:#4A7AB8;background:transparent;border:none;cursor:pointer;font-family:‘Cinzel’,serif;letter-spacing:0.04em;padding:0;}
+.saved-action-btn:hover{color:#C9A84C;}
+/ Related topics /
+.related-topics{margin-top:12px;padding-top:10px;border-top:1px solid rgba(201,168,76,0.15);}
+.related-label{font-size:0.72rem;color:#4A7AB8;font-family:‘Cinzel’,serif;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+.related-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.related-chip{padding:3px 10px;border:1px solid #2A5A9C;border-radius:2px;font-size:0.78rem;color:#B8C8DC;cursor:pointer;background:transparent;font-style:italic;font-family:‘EB Garamond’,serif;transition:all 0.2s;}
+.related-chip:hover{border-color:#4A7AB8;color:#C9A84C;}
+/ Streaming cursor */
+.stream-cursor{display:inline-block;width:2px;height:1em;background:#C9A84C;margin-left:2px;vertical-align:text-bottom;animation:blink 0.7s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
 </style>
 </head>
-
 <body>
-
-<header>
-  <div class="cross">☦</div>
-  <h1>Come and See</h1>
-  <div class="subtitle">
-    Ask anything about the Orthodox Christian faith — doctrine, feasts,
-    the Church Fathers, prayer, icons, Greek terms, or how to begin the journey.
+<div class="feast-banner" id="feastBanner">☦&#xFE0E;</div>
+<header onclick="resetHome()" title="Return to home">
+  <div class="cross-icon">☦&#xFE0E;</div>
+  <div class="header-text">
+    <h1>Orthodox Companion</h1>
+    <p>An Orthodox Christian companion for understanding and living the faith</p>
   </div>
-</header>
-
-<nav>
-  <button class="tab active" onclick="switchTab('home')">Home</button>
-  <button class="tab" onclick="switchTab('chat')">Chat</button>
-</nav>
-
-<!-- HOME -->
-<div id="home" class="section active">
-
-  <button class="prompt" onclick="askPrompt('What is theosis?')">
-    What is Theosis?
-  </button>
-
-  <button class="prompt" onclick="askPrompt('Tell me about Pascha.')">
-    Tell me about the Feast of Pascha
-  </button>
-
-  <button class="prompt" onclick="askPrompt('What did the Church Fathers teach on salvation?')">
-    What did the early Church Fathers teach on salvation?
-  </button>
-
-  <button class="prompt" onclick="askPrompt('What is the Jesus Prayer?')">
-    What is the Jesus Prayer?
-  </button>
-
-  <button class="prompt" onclick="askPrompt('What is celebrated today?')">
-    What is the Church celebrating today?
-  </button>
-
-</div>
-
-<!-- CHAT -->
-<div id="chat" class="section">
-
-  <div id="chatBox" class="chat-box">
-    <div class="msg bot">Welcome. Backend connection ready.</div>
+  <div class="header-ornament">· · ·</div>
+</header><div id="chat">
+  <div class="welcome" id="welcome">
+    <span class="cross-large">☦&#xFE0E;</span>
+    <h2>Come and See</h2>
+    <p>Ask anything about the Orthodox Christian faith — doctrine, feasts, the Church Fathers, prayer, icons, Greek terms, or how to begin the journey. This companion walks with you.</p>
+    <div class="starter-divider"><span class="starter-divider-text">Conversation Starters</span></div>
+    <div class="starter-questions">
+      <button class="starter-btn" type="button" onclick="askStarter(this)">What is Theosis? <span class="starter-arrow">→</span></button>
+      <button class="starter-btn" type="button" onclick="askStarter(this)">Tell me about the Feast of Pascha. <span class="starter-arrow">→</span></button>
+      <button class="starter-btn" type="button" onclick="askStarter(this)">What did the early Church Fathers teach on salvation? <span class="starter-arrow">→</span></button>
+      <button class="starter-btn" type="button" onclick="askStarter(this)">What is the Jesus Prayer? <span class="starter-arrow">→</span></button>
+      <button class="starter-btn" type="button" onclick="askStarter(this)">What is the Church celebrating today? <span class="starter-arrow">→</span></button>
+    </div>
+    <div class="enter-hint"><span class="enter-hint-text">or enter your own question below</span></div>
   </div>
-
+</div><!-- Icon Modal --><div class="icon-modal" id="iconModal" onclick="closeIconModal()"><img id="iconModalImg" src="" alt="Holy Icon"/><div class="icon-modal-caption" id="iconModalCaption"></div></div><!-- Panel: Chat Mode --><div id="panel-chatmode" style="display:none;position:fixed;bottom:88px;left:0;right:0;z-index:200;background:linear-gradient(180deg,#1B3A6B,#0F2035);border-top:2px solid #C9A84C;padding:20px 24px 24px;box-shadow:0 -4px 30px rgba(0,0,0,0.7);max-height:70vh;overflow-y:auto;">
+  <div style="max-width:820px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <h3 style="font-family:'Cinzel',serif;font-size:0.9rem;color:#E8CB7A;letter-spacing:0.08em;text-transform:uppercase;">Chat Mode</h3>
+      <button type="button" onclick="closeAllPanels()" style="background:transparent;border:none;color:#B8C8DC;font-size:1.3rem;cursor:pointer;">&#x2715;</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <label id="label-simple" style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:10px 14px;border:1px solid #C9A84C;border-radius:3px;background:rgba(42,90,156,0.12);" onclick="setModeAndClose('explore','simple')">
+        <input type="radio" name="chatmode" value="simple" style="margin-top:3px;accent-color:#C9A84C;" checked/>
+        <div><div style="color:#F0E6CC;font-size:0.95rem;margin-bottom:2px;">Simple Answer</div><div style="color:#B8C8DC;font-size:0.82rem;font-style:italic;">A warm, brief response. Perfect for inquirers and catechumens.</div></div>
+      </label>
+      <label id="label-study" style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:10px 14px;border:1px solid #2A5A9C;border-radius:3px;" onclick="setModeAndClose('study','study')">
+        <input type="radio" name="chatmode" value="study" style="margin-top:3px;accent-color:#C9A84C;"/>
+        <div><div style="color:#F0E6CC;font-size:0.95rem;margin-bottom:2px;">Full Study</div><div style="color:#B8C8DC;font-size:0.82rem;font-style:italic;">Structured depth with Greek terms, Church Fathers, and liturgical connections.</div></div>
+      </label>
+      <label id="label-deep" style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:10px 14px;border:1px solid #2A5A9C;border-radius:3px;" onclick="setModeAndClose('deep','deep')">
+        <input type="radio" name="chatmode" value="deep" style="margin-top:3px;accent-color:#C9A84C;"/>
+        <div><div style="color:#F0E6CC;font-size:0.95rem;margin-bottom:2px;">Sources Only</div><div style="color:#B8C8DC;font-size:0.82rem;font-style:italic;">Direct quotes and citations from the Church Fathers. For deeper theological study.</div></div>
+      </label>
+    </div>
+  </div>
+</div><!-- Panel: Saved Chats --><div id="panel-saved" style="display:none;position:fixed;bottom:88px;left:0;right:0;z-index:200;background:linear-gradient(180deg,#1B3A6B,#0F2035);border-top:2px solid #C9A84C;padding:20px 24px 24px;box-shadow:0 -4px 30px rgba(0,0,0,0.7);max-height:70vh;overflow-y:auto;">
+  <div style="max-width:820px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <h3 style="font-family:'Cinzel',serif;font-size:0.9rem;color:#E8CB7A;letter-spacing:0.08em;text-transform:uppercase;">Saved Chats</h3>
+      <button type="button" onclick="closeAllPanels()" style="background:transparent;border:none;color:#B8C8DC;font-size:1.3rem;cursor:pointer;">&#x2715;</button>
+    </div>
+    <div id="savedList"></div>
+    <p id="savedEmpty" style="color:#4A7AB8;font-size:0.82rem;font-style:italic;">No saved responses yet. Tap [Save] on any response.</p>
+  </div>
+</div><!-- Panel: Settings --><div id="panel-settings" style="display:none;position:fixed;bottom:88px;left:0;right:0;z-index:200;background:linear-gradient(180deg,#1B3A6B,#0F2035);border-top:2px solid #C9A84C;padding:20px 24px 24px;box-shadow:0 -4px 30px rgba(0,0,0,0.7);max-height:70vh;overflow-y:auto;">
+  <div style="max-width:820px;margin:0 auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <h3 style="font-family:'Cinzel',serif;font-size:0.9rem;color:#E8CB7A;letter-spacing:0.08em;text-transform:uppercase;">&#9881; Settings</h3>
+      <button type="button" onclick="closeAllPanels()" style="background:transparent;border:none;color:#B8C8DC;font-size:1.3rem;cursor:pointer;">&#x2715;</button>
+    </div>
+    <!-- Text Size -->
+    <div style="margin-bottom:24px;">
+      <div style="font-family:'Cinzel',serif;font-size:0.72rem;color:#4A7AB8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Text Size</div>
+      <div style="display:flex;gap:8px;">
+        <button type="button" onclick="setFontSize('small')" id="fs-small" style="padding:6px 18px;border:1px solid #2A5A9C;border-radius:2px;background:transparent;color:#B8C8DC;cursor:pointer;font-size:0.8rem;font-family:'EB Garamond',serif;">A</button>
+        <button type="button" onclick="setFontSize('medium')" id="fs-medium" style="padding:6px 18px;border:1px solid #C9A84C;border-radius:2px;background:rgba(201,168,76,0.1);color:#E8CB7A;cursor:pointer;font-size:1rem;font-family:'EB Garamond',serif;">A</button>
+        <button type="button" onclick="setFontSize('large')" id="fs-large" style="padding:6px 18px;border:1px solid #2A5A9C;border-radius:2px;background:transparent;color:#B8C8DC;cursor:pointer;font-size:1.2rem;font-family:'EB Garamond',serif;">A</button>
+      </div>
+    </div>
+    <!-- Start Fresh -->
+    <div style="margin-bottom:24px;">
+      <div style="font-family:'Cinzel',serif;font-size:0.72rem;color:#4A7AB8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Conversation</div>
+      <button type="button" onclick="resetHome();closeAllPanels();" style="padding:8px 20px;border:1px solid #2A5A9C;border-radius:2px;background:transparent;color:#B8C8DC;cursor:pointer;font-family:'EB Garamond',serif;font-size:0.9rem;">&#x21BA; Start Fresh</button>
+    </div>
+    <!-- About -->
+    <div style="padding-top:16px;border-top:1px solid rgba(201,168,76,0.15);">
+      <div style="font-family:'Cinzel',serif;font-size:0.72rem;color:#4A7AB8;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">About</div>
+      <p style="color:#B8C8DC;font-size:0.85rem;font-style:italic;line-height:1.6;">Orthodox Companion is a catechetical tool grounded in Holy Scripture, the Holy Fathers, and the life of the Church. Drawing from 5,786 patristic and liturgical sources.</p>
+      <p style="color:#4A7AB8;font-size:0.75rem;margin-top:6px;">Version 1.0 &nbsp;&#9679;&nbsp; OrthodoxCompanion.com</p>
+    </div>
+  </div>
+</div><div class="input-area">
   <div class="input-row">
-    <input id="input" placeholder="Ask a question...">
-    <button class="send" onclick="send()">Send</button>
+    <textarea id="input" placeholder="Ask about the Orthodox faith…" rows="1"></textarea>
+    <button id="sendBtn" type="button">➤</button>
   </div>
+  <!-- Byzantine Blue Tab Bar -->
+  <div id="tabBar" style="display:flex;background:#0F2035;border-top:1px solid #2A5A8C;margin:10px -16px -14px;padding:0;">
+    <button type="button" id="tab-chatmode" onclick="togglePanel('chatmode')" style="flex:1;padding:11px 6px 10px;background:transparent;border:none;border-right:1px solid #2A5A8C;color:#E8F0F8;font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.07em;cursor:pointer;text-transform:uppercase;transition:background 0.2s;">Chat Mode</button>
+    <button type="button" id="tab-saved" onclick="togglePanel('saved')" style="flex:1;padding:11px 6px 10px;background:transparent;border:none;border-right:1px solid #2A5A8C;color:#E8F0F8;font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.07em;cursor:pointer;text-transform:uppercase;transition:background 0.2s;">Saved Chats</button>
+    <button type="button" id="tab-settings" onclick="togglePanel('settings')" style="flex:1;padding:11px 6px 10px;background:transparent;border:none;color:#E8F0F8;font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.07em;cursor:pointer;text-transform:uppercase;transition:background 0.2s;">&#9881; Settings</button>
+  </div>
+</div><script>
+"use strict";
 
-</div>
+const API_BASE = "https://orthodox-sources-api.onrender.com";
+const API_KEY = "orthodox_api_09192015";
+const ANTHROPIC_API = "https://silent-disk-1140.holt-kevin13.workers.dev";
 
-<script>
+let conversationHistory = [];
+let isLoading = false;
+let sessionQuestions = [];
 
-function switchTab(tab) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById(tab).classList.add('active');
+// ── Analytics session ID — generated once per page load, never stored, no PII ──
+const sessionId = (typeof crypto !== 'undefined' && crypto.randomUUID)
+  ? crypto.randomUUID()
+  : 'sess_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
 
-  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+// ── Tester tag — pass ?tester=alpha in the URL to group tester sessions ──
+const testerTag = new URLSearchParams(window.location.search).get('tester') || null;
+
+// ── Question source tracking — reset before each send ──
+// Values: 'direct' | 'graph_chip' | 'suggestion_chip' | 'starter_btn'
+var nextQuestionSource = 'direct';
+var nextPriorTopic     = null;      // only set when source is graph_chip
+
+// ── Session depth and mode tracking ──
+var questionIndex     = 0;          // increments on every question sent
+var lastModeSent      = null;       // mode active when last question was sent
+var sessionTopicsSeen = [];         // canonical keys asked this session — repeat detection
+
+// Curated icon map - add URLs as you source them
+var curatedIcons = {
+  'john chrysostom':'','basil the great':'','gregory nazianzen':'',
+  'gregory of nyssa':'','athanasius':'','maximus the confessor':'',
+  'john of damascus':'','isaac the syrian':'','john climacus':'',
+  'gregory palamas':'','nicholas cabasilas':'','photios the great':'',
+  'irenaeus':'','ignatius of antioch':'','cyril of alexandria':'',
+  'ephrem the syrian':'','seraphim of sarov':'','paisios the athonite':'',
+  'anthony the great':'','theosis':'','trinity':'','pascha':'',
+  'theophany':'','nativity':'','transfiguration':'','dormition':'',
+  'pentecost':'','theotokos':'','resurrection':''
+};
+Object.keys(curatedIcons).forEach(function(k){ if(!curatedIcons[k]) delete curatedIcons[k]; });
+
+// Saved responses
+function getSaved(){try{return JSON.parse(localStorage.getItem('oc_saved')||'[]');}catch(e){return[];}}
+function setSaved(arr){try{localStorage.setItem('oc_saved',JSON.stringify(arr));}catch(e){}}
+function saveResponse(question,text){
+  var saved=getSaved();
+  saved.unshift({id:Date.now(),q:question,text:text,date:new Date().toLocaleDateString()});
+  if(saved.length>50)saved=saved.slice(0,50);
+  setSaved(saved);renderSavedList();
+}
+function deleteSaved(id){setSaved(getSaved().filter(function(s){return s.id!==id;}));renderSavedList();}
+function renderSavedList(){
+  var list=document.getElementById('savedList');
+  var empty=document.getElementById('savedEmpty');
+  if(!list)return;
+  var saved=getSaved();
+  if(saved.length===0){list.innerHTML='';if(empty)empty.style.display='block';return;}
+  if(empty)empty.style.display='none';
+  list.innerHTML=saved.map(function(s){
+    var preview=s.text.replace(/<[^>]+>/g,'').substring(0,80)+'...';
+    return '<div class="saved-item">'+
+      '<div class="saved-item-q">+ '+s.q.substring(0,60)+'</div>'+
+      '<div class="saved-item-preview">'+preview+'</div>'+
+      '<div class="saved-item-actions">'+
+      '<span style="font-size:0.7rem;color:#2A5A9C;">'+s.date+'</span>'+
+      '<button class="saved-action-btn" onclick="deleteSaved('+s.id+')">Remove</button>'+
+      '</div></div>';
+  }).join('');
 }
 
-function addMsg(text, cls) {
-  const div = document.createElement('div');
-  div.className = 'msg ' + cls;
-  div.innerText = text;
-  document.getElementById('chatBox').appendChild(div);
+// Icon modal - tap to enlarge
+function openIconModal(url,caption){
+  var m=document.getElementById('iconModal');
+  var img=document.getElementById('iconModalImg');
+  var cap=document.getElementById('iconModalCaption');
+  if(!m||!img)return;
+  img.src=url;
+  if(cap)cap.textContent=caption||'';
+  m.classList.add('open');
+}
+function closeIconModal(){
+  var m=document.getElementById('iconModal');
+  if(m)m.classList.remove('open');
 }
 
-function askPrompt(text) {
-  switchTab('chat');
-  document.getElementById('input').value = text;
+
+
+//  DOM ready 
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('sendBtn').addEventListener('click', function() {
+    sendMessage();
+  });
+  document.getElementById('input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  });
+  document.getElementById('input').addEventListener('input', function() {
+    autoResize(this);
+  });
+  loadFeastBanner();
+  document.getElementById('chat').addEventListener('click', function(e) {
+    var item = e.target.closest('.icon-item');
+    if (item && item.dataset.iconurl) {
+      openIconModal(item.dataset.iconurl, item.dataset.iconcap || '');
+    }
+  });
+});
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 140) + 'px';
 }
 
-async function send() {
-  const input = document.getElementById('input');
-  const text = input.value.trim();
-  if (!text) return;
+function askStarter(btn) {
+  nextQuestionSource = 'starter_btn';
+  nextPriorTopic     = null;
+  document.getElementById('input').value = btn.textContent.trim();
+  sendMessage();
+}
 
-  addMsg(text, 'user');
-  input.value = '';
+// ── TAB PANELS ──────────────────────────────────────────
+var _activePanel = null;
+function togglePanel(name) {
+  var panelIds = ['chatmode','saved','settings'];
+  if (_activePanel === name) {
+    // toggle off
+    document.getElementById('panel-' + name).style.display = 'none';
+    document.getElementById('tab-' + name).style.background = 'transparent';
+    _activePanel = null;
+    return;
+  }
+  // close all, open requested
+  panelIds.forEach(function(p) {
+    document.getElementById('panel-' + p).style.display = 'none';
+    document.getElementById('tab-' + p).style.background = 'transparent';
+  });
+  document.getElementById('panel-' + name).style.display = 'block';
+  document.getElementById('tab-' + name).style.background = 'rgba(42,90,140,0.5)';
+  _activePanel = name;
+  if (name === 'saved') renderSavedList();
+}
 
-  const res = await fetch('/chat', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: text })
+function closeAllPanels() {
+  ['chatmode','saved','settings'].forEach(function(p) {
+    document.getElementById('panel-' + p).style.display = 'none';
+    document.getElementById('tab-' + p).style.background = 'transparent';
+  });
+  _activePanel = null;
+}
+
+function setModeAndClose(mode, label) {
+  setMode(mode);
+  highlightMode(label);
+  // tick the radio
+  var radios = document.querySelectorAll('input[name="chatmode"]');
+  radios.forEach(function(r){ r.checked = (r.value === label); });
+  setTimeout(closeAllPanels, 180);
+}
+
+// legacy shim so any old references don't break
+function toggleSettings() { togglePanel('settings'); }
+
+function highlightMode(mode) {
+  ['simple','study','deep'].forEach(function(m) {
+    var el = document.getElementById('label-' + m);
+    if (el) {
+      el.style.borderColor = m === mode ? '#C9A84C' : '#2A5A9C';
+      el.style.background = m === mode ? 'rgba(42,90,156,0.12)' : 'transparent';
+    }
+  });
+}
+
+function setFontSize(size) {
+  var sizes = { small: '0.9rem', medium: '1.05rem', large: '1.2rem' };
+  var chat = document.getElementById('chat');
+  if (chat) chat.style.fontSize = sizes[size] || '1.05rem';
+  ['small','medium','large'].forEach(function(s) {
+    var btn = document.getElementById('fs-' + s);
+    if (btn) {
+      btn.style.borderColor = s === size ? '#C9A84C' : '#2A5A9C';
+      btn.style.background = s === size ? 'rgba(201,168,76,0.1)' : 'transparent';
+      btn.style.color = s === size ? '#E8CB7A' : '#B8C8DC';
+    }
+  });
+}
+
+function resetHome() {
+  conversationHistory = [];
+  isLoading = false;
+  document.getElementById('sendBtn').disabled = false;
+  var chat = document.getElementById('chat');
+  chat.innerHTML = '';
+  var welcome = document.createElement('div');
+  welcome.className = 'welcome';
+  welcome.id = 'welcome';
+  welcome.innerHTML = '<span class="cross-large">☦&#xFE0E;</span><h2>Come and See</h2><p>Ask anything about the Orthodox Christian faith — doctrine, feasts, the Church Fathers, prayer, icons, Greek terms, or how to begin the journey. This companion walks with you.</p><div class="starter-divider"><span class="starter-divider-text">Conversation Starters</span></div><div class="starter-questions"><button class="starter-btn" type="button" onclick="askStarter(this)">What is Theosis? <span class="starter-arrow">→</span></button><button class="starter-btn" type="button" onclick="askStarter(this)">Tell me about the Feast of Pascha. <span class="starter-arrow">→</span></button><button class="starter-btn" type="button" onclick="askStarter(this)">What did the early Church Fathers teach on salvation? <span class="starter-arrow">→</span></button><button class="starter-btn" type="button" onclick="askStarter(this)">What is the Jesus Prayer? <span class="starter-arrow">→</span></button><button class="starter-btn" type="button" onclick="askStarter(this)">What is the Church celebrating today? <span class="starter-arrow">→</span></button></div><div class="enter-hint"><span class="enter-hint-text">or enter your own question below</span></div>';
+  chat.appendChild(welcome);
+  loadFeastBanner();
+}
+
+
+function hideWelcome() {
+  var w = document.getElementById('welcome');
+  if (w) w.remove();
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function sanitizeMarkdown(t) {
+  return t
+    .replace(/^#{1,4}\s+(.+)$/gm, '<h3>$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^#\s*/gm, '')
+    .replace(/^[-*]\s+(.+)$/gm, '<p>$1</p>')
+    // Strip API quote numbering artifacts e.g. ", Quote 2" or ", quote 3"
+    .replace(/,\s*[Qq]uote\s*\d+/g, '')
+    // Strip doubled source names e.g. "Foo, Foo, Chapter 1" -> "Foo, Chapter 1"
+    .replace(/([^,]+),\s*\1,/g, '$1,');
+}
+
+//  CHAT MODE 
+var currentMode = 'explore';
+function setMode(mode) {
+  currentMode = mode;
+  ['explore','study','deep'].forEach(function(m) {
+    var btn = document.getElementById('mode-' + m);
+    if (btn) btn.classList.toggle('active', m === mode);
+  });
+}
+
+function getModeInstructions() {
+  if (currentMode === 'study') {
+    return [
+      "RESPONSE MODE: Study Mode.",
+      "",
+      "STUDY MODE GUARDRAIL OVERRIDES — these apply in addition to all global guardrails and take absolute precedence:",
+      "",
+      "GUARDRAIL A — LATIN TERMINOLOGY BAN (ABSOLUTE): NEVER use the phrase 'in persona Christi' anywhere in your response — not in the Definition section, not in the Greek Term section, not in citation framing, not anywhere. This is a Roman Catholic canonical formula. The sole acceptable Orthodox language is 'the priest as eikon (icon) of Christ.' This applies without exception in Study Mode.",
+      "",
+      "GUARDRAIL B — CITATION SPECIFICITY (ABSOLUTE): NEVER use 'Full Text' as a citation locator. Every patristic or liturgical citation must include a specific chapter, section, homily number, or paragraph reference. If the corpus entry only supplies 'Full Text,' cite the most recognizable specific passage of that work instead. Two known offenders: (1) Chrysostom Paschal Homily — cite as 'opening proclamation' or the specific passage beginning 'If any man be devout and a lover of God'; (2) St. Ephrem Lenten Prayer — cite as 'the four-petition Lenten Prayer as used throughout Great Lent' and quote the prayer in its traditional form. A citation of any work as 'Full Text' is never acceptable in Study Mode.",
+      "",
+      "GUARDRAIL C — MULTIPLE FATHERS REQUIRED: Study Mode depth means broader patristic sourcing — not deeper citation of multiple sections from the same Father. TWO DISTINCT NAMED FATHERS IS THE MINIMUM FLOOR, NOT A CEILING. If the API corpus supplies three or four distinct Fathers, use all of them — do not drop confirmed corpus sources to stay at two. The rule is: if the corpus returns multiple entries from the same single Father, choose the single strongest quote from that Father rather than citing him twice. Then include all other distinct Fathers the corpus supplies. Never cite the same Father twice in the 'What the Fathers Say' section. Never drop a confirmed corpus source in order to introduce a different one.",
+      "",
+      "GUARDRAIL D — NO DISCLAIMER IN STUDY MODE (ABSOLUTE): The disclaimer beginning 'Holy Tradition speaks to this question more broadly...' must NEVER appear in a Study Mode response. Study Mode serves serious theological students who require the Church's full voice. If corpus data is sparse, acknowledge this briefly within the response body and give what the Fathers do say. Never redirect before engaging.",
+      "",
+      "GUARDRAIL E — CITATION AUTHENTICITY: Every citation in the 'What the Fathers Say' section must come from a source confirmed in the API corpus data provided. If a citation cannot be confirmed with a specific work and reference from the API data, do not include it. This applies especially to opening quotations — if a quote appears in your training but lacks a verified work and chapter from the corpus data, omit it entirely rather than present it without attribution.",
+      "",
+      "Structure your response as:",
+      "1. <h3>Definition</h3> — clear Orthodox definition",
+      "2. <h3>The Greek Term</h3> — if applicable. Never use 'in persona Christi' here or anywhere.",
+      "3. <h3>What the Fathers Say</h3> — quote from at least two distinct Fathers with full specific citation. CITATION FORMAT IS MANDATORY: every patristic citation in this section MUST use the formal HTML block format — <blockquote>quote text</blockquote><p class='attribution'>— St. Father Name, Work Title, Locator</p>. NEVER use prose-embedded format such as 'quote text (Work, Locator)' or 'According to St. X (Work, Ch. Y)'. NEVER use parenthetical inline citations. The blockquote + attribution block is the only acceptable format in Study Mode. Never cite a Father by name alone. Never show API numbering artifacts like 'Quote 1' or 'Quote 2'.",
+      "4. <h3>In the Liturgy</h3> — how it lives in worship",
+      "5. <h3>For Daily Life</h3> — practical application",
+      "Be thorough but readable. Use API data as primary source. Aim for no more than 700 words across all five sections. Do not compress or omit confirmed corpus sources in order to hit the word limit — if the corpus supplies four Fathers, include all four even if the response runs slightly longer.",
+      "End with EXACTLY 3 follow-up suggestion chips — no more, no fewer. Use this EXACT HTML format: <div class='suggestions'><button class='suggestion-chip' type='button'>First question</button><button class='suggestion-chip' type='button'>Second question</button><button class='suggestion-chip' type='button'>Third question</button></div>. Questions must be deeper, more theological, appropriate for a serious student. This chip block is MANDATORY — never omit it."
+    ].join('\n');
+  }
+  if (currentMode === 'deep') {
+    return [
+      "RESPONSE MODE: Sources Only Mode.",
+      "Your task is to present direct quotations from the Church Fathers and Scripture. Let them speak.",
+      "",
+      "STRICT RULES — follow exactly:",
+      "1. DIRECT QUOTES ONLY. Never paraphrase a Father and present it as a quote. If you cannot find an exact quote, do not invent one. A paraphrase like 'He teaches that...' attributed to a Father is forbidden.",
+      "2. NO DUPLICATE SOURCES. Each Father and each specific work may appear only ONCE. If the API returns multiple entries from the same Father and same work, choose the single strongest quote and discard the rest.",
+      "3. FULL CITATION REQUIRED. Every quote must include: Father name, Work title, and Chapter/Section/Step/Homily number. A citation of name alone — e.g. '— St. John Chrysostom' — is not acceptable. If the API source does not supply a specific reference, do not use that source.",
+      "4. STRIP INTERNAL NUMBERING. Never show 'Quote 1', 'Quote 2', 'Quote 3' or similar API artifacts in your response.",
+      "5. END ON THE LAST QUOTE. Do not add interpretive closing paragraphs, summaries, or theological reflections after the final quote. The sources speak for themselves.",
+      "6. ATTRIBUTION FORMAT: Each quote ends with: — Father Name, Work Title, Chapter/Section/Reference.",
+      "7. Scripture quotes are welcome and do not count against the Father uniqueness rule.",
+      "If sources are sparse, say so honestly and briefly.",
+      "End with exactly 3 follow-up suggestion chips pointing toward related patristic texts or topics for deeper study."
+    ].join('\n');
+  }
+  return [
+    "RESPONSE MODE: Simple Answer.",
+    "Give a brief, warm Orthodox answer — 2 to 3 paragraphs maximum.",
+    "No heavy structure or subheadings. Minimal citations.",
+    "Focus on clarity and warmth for someone new to the faith.",
+    "Your response must not exceed 250 words. If you cannot cover the topic in 250 words, cover the most important point and offer a follow-up suggestion for deeper study.",
+    "End with exactly 2 follow-up suggestion chips — warm, topic-specific, phrased as natural questions an inquirer might ask next."
+  ].join('\n');
+}
+
+// ── QUERY PRE-PROCESSOR ──────────────────────────────────────────────────────
+// Detects question type and extracts canonical corpus keys from framing that
+// the raw topicMap/feastMap string-match would otherwise miss entirely.
+
+function preprocessQuery(userMessage) {
+  var m = userMessage.toLowerCase();
+
+  // ── Type detection ── (order matters: most specific first)
+  var type = 'definitional';
+
+  if (/toll.?house|aerial toll|after death|when (we|i) die|what happens.*(die|death)|die.*what happens|intermediate state|last things?|final judgment|purgatory|heaven.*hell|hell.*heaven|general resurrection/.test(m)) {
+    type = 'eschatological';
+  } else if (/how (do|should|can) i\b|how to (deal|handle|overcome|fight|pray|fast|confess|struggle)|struggle with|dealing with|i (am|keep|feel|struggle)\b|my (sin|anger|fear|pride|passion|struggle|soul)\b|overcome the|fight the/.test(m)) {
+    type = 'pastoral';
+  } else if (/\bdiffer\b|compar|contrast|\bvs\b|unlike|filioque|double procession|sola (fide|scriptura|gratia)|papal|pope.*primac|catholic.*orthodox|orthodox.*catholic|protestant|roman church|what does orthodoxy teach|orthodox (response|position|answer|view)|can women|women.*(priest|ordain)|respond to|defense of/.test(m)) {
+    type = /differ|compar|contrast|\bvs\b|unlike|catholic|protestant|roman|filioque|sola |papal|pope/.test(m) ? 'comparative' : 'apologetic';
+  }
+
+  // ── Topic key extraction ──
+  // Each entry: [regex, [primary_key, ...fallback_keys]]
+  // Keys are tried in order; first API hit wins.
+  var topicPatterns = [
+    // P2 FIX: Theosis — explicit early catch so preprocessor fires, not just topicMap fallback.
+    // All three Fathers (Athanasius, Palamas, Cabasilas) must return on every theosis query.
+    [/theosis|deification|divinization|theose|partakers.*divine|divine.*nature.*partake|participation.*divine/, ['theosis']],
+
+    // FIXED R2: Essence/Energies (Palamism) — before generic apophatic catch
+    [/essence.*energ|energ.*essence|palamism|palamite|\bpalamas\b|lossky|uncreated light|uncreated grace|hesychast.*theolog|hesychast.*council|divine.*distinction.*god|theoria.*energ|energ.*theoria/, ['essence_energies', 'divine_energies', 'divine_essence']],
+
+    // FIXED R2: Ancestral sin — correct key (was wrongly mapped to 'salvation/incarnation')
+    [/ancestral sin|propatorikon|sin of adam|adam.*inherit|inherit.*adam|death.*from adam|corruption.*inherit|inherit.*corruption/, ['ancestral_sin', 'propatorikon']],
+
+    // FIXED R2: Great Canon / Andrew of Crete
+    [/great canon|canon of andrew|andrew.*crete|crete.*andrew|lenten canon|canon of repentance/, ['great_canon', 'repentance', 'lent']],
+
+    // FIXED R2: Other religions — route to mission corpus (59 sources), not Tier 3
+    [/other religion|other faith|non.?christian|outside.*church.*save|save.*outside.*church|buddhi|\bhindu\b|\bislam\b|\bmuslim\b|confucian|religious pluralism|logos.*other religion|truth.*belong.*christ|can.*non.?christian.*save|people.*outside.*church|other.*path.*salvation|salvation.*other.*religion/, ['other_religions', 'mission', 'salvation']],
+
+    // FIXED R2: Paschal Homily / Chrysostom Easter sermon
+    // P6 FIX: expanded to catch plain pascha, Christ is risen, theological meaning queries
+    [/paschal homily|chrysostom.*pascha|pascha.*homily|homily.*pascha|christ is risen.*homily|meaning.*pascha|theological.*pascha|pascha.*mean|pascha.*theolog|\bpascha\b/, ['pascha', 'paschal_homily', 'paschal_worship']],
+
+    // P3 FIX: Salvation — soteriology key now seeded (25 entries, Irenaeus recapitulation primary).
+    // Both keys tried — soteriology first for patristic depth, salvation for breadth.
+    [/how are we saved|what does orthodoxy teach.*salv|early church fathers.*salv|fathers.*teach.*salv|patristic.*salv|salv.*church fathers|soteriology|what.*orthodoxy.*salv|orthodox.*teach.*salv/, ['soteriology', 'salvation']],
+
+    // Filioque — filioque MUST be first key so guaranteedTags fires and Filioque/Holy Spirit/Trinity chips appear
+    // council_879_880 and gregory_of_cyprus wired in graph session
+    [/filioque|double procession|procession.*spirit|spirit.*proceeds|ekporeusis/, ['filioque', 'holy_spirit', 'trinity', 'council_879_880']],
+    // P5 FIX: Sola fide — route to sola_fide key first so Basil (On the Holy Spirit / Moral Rules),
+    // Mark the Ascetic (On Those Who Think They Are Made Righteous by Works),
+    // and Cassian (Conferences Book 13) all return.
+    // P5 FIX (Round 2): sola_fide must be FIRST key — first hit wins, salvation was firing before sola_fide could route.
+    // Synod of Jerusalem 1672 / Dositheus Confession must surface. James 2:24 must appear.
+    [/sola fide|faith alone|justif\w+\s*(by|through)\s*faith/, ['sola_fide', 'salvation', 'grace']],
+    [/sola scriptura|bible alone|scripture.{0,20}tradition|tradition.{0,20}scripture/, ['scripture_and_tradition']],
+    [/papal|pope.*primac|roman.*primac|bishop of rome|universal jurisdiction/, ['priesthood']],
+    [/purgatory/, ['eschatology']],
+    [/original sin/, ['salvation', 'incarnation']],
+    [/icons?\s*(wrong|idol|worship|venerat)|why.{0,20}icons?|venerat.{0,20}icons?/, ['icons']],
+
+    // SWEEP FIX: Predestination (Q8) — 12 sources, Cassian Conf.13, Jerusalem Synod 1672
+    [/predestination|predestine|\bproorismos\b|foreknowledge.*god|god.*foreknowledge|double predestination|calvinist.*orthodox|once saved|eternal security/, ['predestination', 'proorismos']],
+
+    // SWEEP FIX: Triodion / Great Lent — great_lent key now seeded (27 entries, Climacus wired)
+    [/triodion|lenten season|lenten period|lenten worship|great lent.*teach|what.*great lent|prepare.*lent|triodion season/, ['triodion', 'great_lent', 'lent', 'repentance']],
+
+    // Pastoral — passions & inner struggle
+    // SWEEP FIX: anger → passions key (346 sources, 233 Maximos entries) not repentance (1 Maximos entry)
+    [/anger|wrath|bad temper|quick to anger|eight thoughts|eight passions|ascetical struggle|spiritual warfare/, ['passions', 'repentance']],
+    // SWEEP FIX: nepsis → nepsis key (261 sources, 155 Maximos entries) not repentance
+    // Q10 FIX: Also fetch Philokalia Greek term sources on nepsis queries — confirmed
+    // fetching but not rendering in Test 2. Explicit cross-link ensures it reaches topicGreek.
+    [/nepsis|watchfulness|sobriety of soul|guard.*heart|attention.*heart|sobriety of heart/, ['nepsis', 'passions']],
+    // SWEEP FIX: passion/logismoi → dedicated passions + logismoi keys
+    [/\bpassion\b|\blogismoi\b|purif.*soul|purif.*heart|katharsis|transformation.*passion|intrusive thoughts.*prayer/, ['passions', 'logismoi']],
+    [/pride|vainglory|vanity|ego\b/, ['repentance']],
+    [/fear|anxiety|worry|despair|hopeless/, ['repentance', 'prayer']],
+    [/addiction|bad habit|sin.*struggle|struggle.*sin/, ['repentance']],
+    [/forgive|unforgiveness|grudge|bitterness/, ['repentance']],
+    [/loneliness|grief|loss/, ['salvation', 'prayer']],
+    // P4 FIX (Round 2): suffering must be FIRST key — salvation was firing before the dedicated suffering entry.
+    // Isaac the Syrian (Ascetical Homilies Homily 38), Chrysostom, and Silouan must all return.
+    // Disclaimer suppressed at Study Mode prompt level. divine impassibility guardrail holds at prompt level.
+    [/\bsuffer\w*|why.*pain|\bpain\b|trials?\b|tribulat|theodicy|divine.*providence|providence.*suffer|why does god allow|why.*god.*evil|god.*permit.*evil|impassib|afflict\w+|cross.*bear|bear.*cross|how.*orthodox.*understand.*pain|what.*orthodox.*teach.*suffer/, ['suffering', 'divine_providence', 'salvation', 'prayer']],
+    [/jealous|envy|covet/, ['repentance']],
+    [/lustful?|sexual sin|pornograph/, ['repentance', 'fasting']],
+
+    // Apologetic / edge cases
+    // P1 FIX (Round 2): toll_houses must be FIRST key for explicit toll house queries.
+    // Mark of Ephesus (cautionary voice) required alongside Theophan (affirmative). eschatology is fallback only.
+    [/toll.?house|aerial toll|aerial customs|particular judgment|soul after death|aerial toll house/, ['toll_houses', 'eschatology']],
+    [/after death|intermediate state|what happens.{0,20}(die|death)|die.{0,20}what happens|soul after death|hades.*judgment|judgment.*hades|what happens when (we|i) die/, ['eschatology', 'toll_houses']],
+    // women_ordination key now seeded (17 entries) — route directly
+    [/women.{0,20}(priest|ordain|clergy)|female.{0,20}priest|can women|ordination.*women|women.*ordination/, ['women_ordination', 'priesthood']],
+    [/convert|becoming orthodox|join.{0,20}church|enter.{0,20}church|catechumen/, ['baptism']],
+    [/divorce|remarriage|second marriage/, ['sacraments']],
+    [/contraception|birth control/, ['sacraments']],
+    [/abortion/, ['sacraments', 'salvation']],
+    [/halloween|occult|witchcraft|superstition/, ['repentance']],
+    [/yoga|eastern meditation|new age/, ['prayer', 'repentance']],
+    [/antichrist|end times|apocalypse|book of revelation.*end/, ['eschatology']],
+    [/saint.*intercess|intercess.*saint|pray.*to saint|saint.*hear/, ['theotokos', 'icons']],
+    [/relics|holy relics/, ['sacraments']],
+    [/celibacy|priestly celibacy/, ['monasticism', 'priesthood']],
+    [/apophatic|negative theology|cataphatic|unknowability.*god/, ['divine_energies']],
+    // Synergy key now seeded (21 entries) — route synergy queries directly
+    [/\bsynerg\w*|free will|human will.*god|cooperation.*grace|grace.*freedom/, ['synergy', 'salvation', 'grace']],
+    [/evolution|age of earth|genesis.*literal/, ['salvation', 'scripture_and_tradition']],
+  ];;
+
+  var keys = [];
+  for (var i = 0; i < topicPatterns.length; i++) {
+    if (topicPatterns[i][0].test(m)) {
+      keys = topicPatterns[i][1];
+      break;
+    }
+  }
+
+  return { type: type, keys: keys };
+}
+
+// ── CORPUS TIER ASSESSMENT ────────────────────────────────────────────────────
+// Tier 1 — Full hit: topic/feast + ≥3 patristic sources
+// Tier 2 — Partial hit: topic/feast/greek term present, sources sparse
+// Tier 3 — Full miss: no structured data returned at all
+
+function assessCorpusTier(results) {
+  var hasTopic = !!(results.topic && !results.topic.detail);
+  var hasFeast = !!(results.feast && !results.feast.detail);
+  var hasGreek = !!(results.greekTerm && !results.greekTerm.detail);
+
+  var sourceCount = 0;
+  var src = results.topicSources || results.feastSources || results.greekSources;
+  if (src) {
+    if (Array.isArray(src.sources)) sourceCount = src.sources.length;
+    else if (Array.isArray(src)) sourceCount = src.length;
+    else if (src.results && Array.isArray(src.results)) sourceCount = src.results.length;
+    else sourceCount = 1; // some data returned, even if shape is unknown
+  }
+  if (results.sources) sourceCount += 1; // scripture/patristic search fallback
+
+  if ((hasTopic || hasFeast) && sourceCount >= 3) return 1;
+  if (hasTopic || hasFeast || hasGreek) return 2;
+  return 3;
+}
+
+// ── QUESTION TYPE FRAMING ─────────────────────────────────────────────────────
+// Appended to the system prompt so the model adjusts its voice to match
+// the framing the user is actually coming from.
+
+function getQuestionTypeInstructions(type) {
+  if (type === 'comparative') {
+    return [
+      "QUESTION TYPE: Comparative.",
+      "The user is asking how Orthodoxy relates to or differs from another tradition.",
+      "Present the Orthodox position clearly, grounded in patristic sources. Represent the other tradition accurately — do not caricature it.",
+      "Be confident but charitable. The truth of Holy Orthodoxy illumines; it does not need to attack."
+    ].join('\n');
+  }
+  if (type === 'pastoral') {
+    return [
+      "QUESTION TYPE: Pastoral.",
+      "The user is asking how to live, struggle, or grow in faith. They may be in real spiritual difficulty.",
+      "Lead with warmth before doctrine. Ground practical guidance in the ascetic Fathers — especially on nepsis (watchfulness) and metanoia.",
+      "Speak to the soul, not only the mind. End with encouragement rooted in Christ's mercy and the nearness of God.",
+      "VOICE CONSISTENCY: Do not open with phrases like 'my heart is warmed by your question' or 'dear friend' — these are inconsistent with the app's established register across all other questions. Warmth is expressed through content, not through affectionate address. Begin directly with the Orthodox teaching.",
+      "STRUCTURE OVERRIDE — STUDY MODE: If the active mode is Study Mode, the five-section structure (Definition / Greek Term / What the Fathers Say / In the Liturgy / For Daily Life) is MANDATORY and must not be replaced by free-form pastoral sections regardless of question type. Warmth is expressed within the five-section structure, not by abandoning it."
+    ].join('\n');
+  }
+  if (type === 'apologetic') {
+    return [
+      "QUESTION TYPE: Apologetic.",
+      "The user wants the Orthodox position on a specific or contested question.",
+      "Be clear and grounded in patristic authority. Distinguish between: dogma (defined by Councils), received theological opinion (acceptable but not binding), and pious tradition.",
+      "Do not overstate certainty where the tradition itself is silent."
+    ].join('\n');
+  }
+  if (type === 'eschatological') {
+    return [
+      "QUESTION TYPE: Eschatological.",
+      "The user is asking about last things — death, toll houses, judgment, heaven, or hell.",
+      "The Church holds certain things dogmatically: the General Resurrection, the Last Judgment, heaven and hell as union with or separation from God.",
+      "On contested matters (e.g. toll houses): present them as pious theological tradition within the Church — taught by respected Fathers — while being honest that they are not dogma and that the tradition is not unanimous.",
+      "Never speculate beyond what the Fathers themselves offer. Honest silence is more Orthodox than confident invention."
+    ].join('\n');
+  }
+  return ''; // definitional / liturgical — no additional framing needed
+}
+
+//  COPY BUTTON 
+function addCopyButton(bubble) {
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'copy-btn';
+  btn.innerHTML = '[Copy]';
+  btn.addEventListener('click', function() {
+    var text = bubble.innerText || bubble.textContent;
+    navigator.clipboard.writeText(text).then(function() {
+      btn.innerHTML = '[Copied]';
+      setTimeout(function() { btn.innerHTML = '[Copy]'; }, 2000);
+    }).catch(function() {
+      btn.innerHTML = '[Copy]';
+    });
+  });
+  bubble.appendChild(btn);
+}
+
+//  SHARE 
+function addShareButton(bubble, userQuestion, responseText) {
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'copy-btn';
+  btn.style.marginLeft = '6px';
+  btn.innerHTML = '[Share]';
+  btn.addEventListener('click', function() {
+    var shareText = 'Orthodox Companion' + '\n\nQ: ' + userQuestion + '\n\n' + (bubble.innerText || bubble.textContent).replace(/Copy|Share/g,'').trim();
+    navigator.clipboard.writeText(shareText).then(function() {
+      btn.innerHTML = '[Copied]';
+      setTimeout(function() { btn.innerHTML = '[Share]'; }, 2000);
+    });
+  });
+  bubble.appendChild(btn);
+}
+
+//  SAVE BUTTON 
+function addSaveButton(bubble, question, text) {
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'save-btn';
+  btn.innerHTML = '[Save]';
+  btn.addEventListener('click', function() {
+    saveResponse(question, text);
+    btn.innerHTML = '[Saved +]';
+    btn.classList.add('saved');
+    setTimeout(function(){ btn.innerHTML='[Save]'; btn.classList.remove('saved'); }, 2000);
+  });
+  bubble.appendChild(btn);
+}
+
+//  AUDIO BUTTON 
+function addAudioButton(bubble, text) {
+  if (!window.speechSynthesis) return;
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'audio-btn';
+  btn.innerHTML = '[▶ Listen]';
+  var speaking = false;
+  btn.addEventListener('click', function() {
+    if (speaking) {
+      window.speechSynthesis.cancel();
+      speaking = false;
+      btn.innerHTML = '[▶ Listen]';
+      return;
+    }
+    var clean = text.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+    var utt = new SpeechSynthesisUtterance(clean);
+    utt.rate = 0.92;
+    utt.onend = function(){ speaking=false; btn.innerHTML='[▶ Listen]'; };
+    utt.onerror = function(){ speaking=false; btn.innerHTML='[▶ Listen]'; };
+    window.speechSynthesis.speak(utt);
+    speaking = true;
+    btn.innerHTML = '[⏸ Stop]';
+  });
+  bubble.appendChild(btn);
+}
+
+//  RELATED TOPICS
+// Chip generation priority:
+//   1. Corpus hit  → topicRelated.related_topics or feast.linked_topics (specific to this response)
+//   2. Tier 2/3 with preprocessKeys → canonical keys from preprocessQuery (specific to this question)
+//   3. Tier 3 with question type  → type-aware suggestions (general but relevant to question framing)
+//   4. Final fallback              → never a hardcoded generic list; always derived from question context
+
+// Human-readable display names for canonical corpus keys
+var TOPIC_DISPLAY = {
+  'repentance': 'The Path of Repentance',
+  'prayer': 'The Practice of Prayer',
+  'fasting': 'Fasting in the Orthodox Life',
+  'theosis': 'What is Theosis?',
+  'salvation': 'Orthodox Understanding of Salvation',
+  'incarnation': 'The Incarnation of Christ',
+  'holy_spirit': 'The Holy Spirit in Orthodoxy',
+  'trinity': 'The Holy Trinity',
+  'eucharist': 'The Holy Eucharist',
+  'baptism': 'The Mystery of Baptism',
+  'icons': 'Holy Icons and the Incarnation',
+  'theotokos': 'The Theotokos — Mother of God',
+  'eschatology': 'Last Things and the Afterlife',
+  'monasticism': 'Monasticism and the Ascetic Life',
+  'priesthood': 'The Orthodox Priesthood',
+  'sacraments': 'The Holy Mysteries',
+  'scripture_and_tradition': 'Scripture and Holy Tradition',
+  'grace': 'Divine Grace',
+  'divine_energies': 'The Uncreated Divine Energies',
+  'hesychasm': 'The Jesus Prayer and Hesychasm',
+  'resurrection': 'The Resurrection of Christ',
+  // SWEEP additions
+  'passions':                'The Passions and Ascetical Struggle',
+  'logismoi':                'Logismoi — Thoughts and Inner Warfare',
+  'nepsis':                  'Nepsis — Watchfulness of Heart',
+  'katharsis':               'Purification and Katharsis',
+  'triodion':                'The Triodion — Great Lent',
+  'predestination':          'Does Orthodoxy Believe in Predestination?',
+  'proorismos':              'Proorismos — Divine Foreknowledge',
+  'once_saved_always_saved': 'Once Saved Always Saved — The Orthodox Response',
+  'ancestral_sin':           'Ancestral Sin — The Orthodox Teaching',
+  'divine_energies':         'The Divine Energies of God',
+  'mission':                 'Orthodox Missionary Theology',
+  'hesychast_controversy':   'The Hesychast Controversy',
+  'watchfulness':            'Watchfulness and Sobriety of Heart',
+  'apatheia':                'Apatheia — Freedom from the Passions',
+  'lent':                    'Great Lent — The Season of Repentance',
+  // POST-GRAPH: New canonical topic keys
+  'essence_energies':        'The Essence and Energies Distinction',
+  'great_canon':             'The Great Canon of St. Andrew of Crete',
+  'paschal_homily':          'The Paschal Homily of St. John Chrysostom',
+  'other_religions':         'Orthodoxy and Other Religions',
+  // P1–P5 new keys
+  'toll_houses':             'The Aerial Toll Houses — Orthodox Teaching',
+  'soteriology':             'Orthodox Soteriology — What the Fathers Teach',
+  'sola_fide':               'Sola Fide — The Orthodox Response',
+  'suffering':               'Suffering and Divine Providence',
+  'divine_providence':       'Divine Providence and the Ascetic Life',
+  // Retest additions — topic-specific Orthodox vocabulary
+  'deification':             'Deification — Partakers of the Divine Nature',
+  'transfiguration':         'The Transfiguration and Uncreated Light',
+  'recapitulation':          'Recapitulation — Irenaeus and Orthodox Soteriology',
+  'perichoresis':            'Perichoresis — The Mutual Indwelling of the Trinity',
+  'nicaea':                  'The Council of Nicaea 325',
+  // Batch 42-46 new canonical keys
+  'great_lent':              'Great Lent — The Orthodox Season of Repentance',
+  'synergy':                 'Synergy — Cooperation with Divine Grace',
+  'women_ordination':        'Women and the Orthodox Priesthood',
+  'islam_and_orthodoxy':     'Islam and the Orthodox Faith',
+  'papacy':                  'The Papacy — The Orthodox Position',
+  'prodigal_son':            'The Parable of the Prodigal Son',
+  'publican_and_pharisee':   'The Publican and the Pharisee',
+  'parousia':                'The Parousia — The Second Coming of Christ',
+  'lazarus_saturday':        'Lazarus Saturday — Foretaste of Pascha',
+  'calvinism':               'Calvinism and the Orthodox Response'
+};
+
+// Type-aware chip suggestions when no corpus keys were matched
+var TYPE_FALLBACK_CHIPS = {
+  'comparative':    ['How does Orthodoxy understand salvation?', 'What does the Orthodox Church teach about the Holy Spirit?', 'How do Orthodox and Western theologies differ on grace?'],
+  'pastoral':       ['How do the Fathers teach us to pray?', 'What is the Orthodox path of repentance?', 'How does fasting strengthen the soul?'],
+  'apologetic':     ['What does Holy Tradition mean in Orthodoxy?', 'How does the Orthodox Church understand Scripture?', 'What is theosis and why does it matter?'],
+  'eschatological': ['What does Orthodoxy teach about prayer for the departed?', 'What is the Orthodox teaching on the Last Judgment?', 'Tell me about the Great Feast of Pascha'],
+  'definitional':   ['What is theosis?', 'How do I begin to pray?', 'What is the role of fasting in the Orthodox life?']
+};
+
+function addRelatedTopics(bubble, apiData) {
+  var related = [];
+  var fromCorpus = false;
+
+  // HARDCODED GUARANTEED TAGS — these override corpus routing on specific questions
+  // Q10: Philokalia, Logismoi, Nepsis absent across 6 consecutive rounds
+  // Q5:  Filioque absent across all rounds despite being the question topic
+  var resolvedKey = apiData._resolvedPreKey || '';
+  var guaranteedTags = {
+    'nepsis':      ['The Philokalia and Neptic Prayer', 'Logismoi — Thoughts and Inner Warfare', 'Nepsis — Watchfulness of Heart'],
+    'filioque':    ['The Filioque — Orthodox Response', 'The Holy Spirit in Orthodoxy', 'The Holy Trinity'],
+    'sola_fide':   ['Synergia — Cooperation with Divine Grace', 'The Synod of Jerusalem 1672', 'Faith and Works in Orthodox Theology'],
+    'repentance':  ['Metanoia — Repentance and Transformation', 'Exomologesis — The Mystery of Confession', 'The Path of Repentance'],
+    'confession':  ['Metanoia — Repentance and Transformation', 'Exomologesis — The Mystery of Confession', 'The Path of Repentance'],
+  };
+  if (guaranteedTags[resolvedKey]) {
+    var div = document.createElement('div');
+    div.className = 'related-topics';
+    var chipsHtml = '<div class="related-label">Explore further</div><div class="related-chips">';
+    guaranteedTags[resolvedKey].forEach(function(t) {
+      chipsHtml += '<button type="button" class="related-chip related-chip-query">' + t + '</button>';
+    });
+    chipsHtml += '</div>';
+    div.innerHTML = chipsHtml;
+    div.querySelectorAll('.related-chip-query').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        nextQuestionSource = 'suggestion_chip';
+        nextPriorTopic     = null;
+        document.getElementById('input').value = btn.textContent.trim();
+        sendMessage();
+      });
+    });
+    bubble.appendChild(div);
+    return;
+  }
+
+  // Priority 1 — live corpus data: topicRelated or feast linked topics
+  if (apiData.topicRelated && apiData.topicRelated.related_topics) {
+    related = apiData.topicRelated.related_topics.slice(0, 4).map(function(t) {
+      return t.title || t.id;
+    }).filter(Boolean);
+    fromCorpus = true;
+  } else if (apiData.feast && apiData.feast.linked_topics) {
+    related = apiData.feast.linked_topics.slice(0, 4);
+    fromCorpus = true;
+  }
+
+  if (fromCorpus && related.length > 0) {
+    var div = document.createElement('div');
+    div.className = 'related-topics';
+    div.innerHTML = '<div class="related-label">Explore further</div><div class="related-chips">' +
+      related.map(function(t) {
+        var display = t.replace(/_/g,' ').replace(/\w/g, function(c){return c.toUpperCase();});
+        return '<button type="button" class="related-chip" data-topic="' + t +
+          '" onclick="askRelated(this.dataset.topic)">' + display + '</button>';
+      }).join('') + '</div>';
+    bubble.appendChild(div);
+    return;
+  }
+
+  // Priority 2 — preprocessQuery canonical keys (Tier 2/3 with a recognisable topic)
+  var preKeys = apiData._preprocessKeys || [];
+  if (preKeys.length > 0) {
+    related = preKeys.slice(0, 3).map(function(k) {
+      return TOPIC_DISPLAY[k] || k.replace(/_/g,' ').replace(/\w/g, function(c){return c.toUpperCase();});
+    });
+  }
+
+  // Priority 3 — question-type fallback (Tier 3, no recognisable corpus key)
+  if (related.length === 0) {
+    var qtype = apiData._questionType || 'definitional';
+    related = (TYPE_FALLBACK_CHIPS[qtype] || TYPE_FALLBACK_CHIPS['definitional']).slice(0, 3);
+  }
+
+  var div = document.createElement('div');
+  div.className = 'related-topics';
+  var chipsHtml = '<div class="related-label">Explore further</div><div class="related-chips">';
+  related.forEach(function(t) {
+    chipsHtml += '<button type="button" class="related-chip related-chip-query">' + t + '</button>';
+  });
+  chipsHtml += '</div>';
+  div.innerHTML = chipsHtml;
+  // Wire each chip to fire the question directly (avoids inline onclick quoting issues)
+  div.querySelectorAll('.related-chip-query').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      nextQuestionSource = 'suggestion_chip';
+      nextPriorTopic     = null;
+      document.getElementById('input').value = btn.textContent.trim();
+      sendMessage();
+    });
+  });
+  bubble.appendChild(div);
+}
+
+function askRelated(topic) {
+  nextQuestionSource = 'graph_chip';
+  nextPriorTopic     = topic;
+  document.getElementById('input').value = 'Tell me about ' + topic.replace(/_/g,' ');
+  sendMessage();
+}
+
+//  FEAST BANNER 
+async function loadFeastBanner() {
+  try {
+    var now = new Date();
+    var today = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+    var data = await apiGet('/day/' + today);
+    if (!data) return;
+    var goarch = (data.data && data.data.goarch) || {};
+    var feasts = goarch.saints_feasts || [];
+    var feastMarkers = ['pascha','nativity','theophany','transfiguration','pentecost','dormition','annunciation','ascension','palm sunday','presentation','entrance','elevation','cross'];
+    var mainFeast = feasts.find(function(f) {
+      return feastMarkers.some(function(m) { return f.toLowerCase().includes(m); });
+    });
+    if (mainFeast) {
+      var banner = document.getElementById('feastBanner');
+      if (banner) {
+        banner.textContent = '☦  Today: ' + mainFeast + '  ☦';
+        banner.classList.add('visible');
+      }
+    }
+  } catch(e) {}
+}
+
+//  FALLBACK MESSAGE 
+// Fallback disclaimer now handled in system prompt
+
+function wireChips(bubble) {
+  bubble.querySelectorAll('.suggestion-chip').forEach(function(chip) {
+    chip.setAttribute('type', 'button');
+    chip.addEventListener('click', function() {
+      nextQuestionSource = 'suggestion_chip';
+      nextPriorTopic     = null;
+      document.getElementById('input').value = chip.textContent.trim();
+      sendMessage();
+    });
+  });
+}
+
+function appendMsg(role, html, extraClass) {
+  extraClass = extraClass || '';
+  var chat = document.getElementById('chat');
+  var div = document.createElement('div');
+  div.className = 'msg ' + role;
+  var av = document.createElement('div');
+  av.className = 'avatar';
+  av.innerHTML = role === 'assistant'
+    ? '<span style="color:#C9A84C;font-family:Segoe UI Symbol,Apple Symbols,Arial Unicode MS,serif;font-style:normal;">&#x2626;&#xFE0E;</span>'
+    : '<span style="color:#E8F0F8;">&#x2726;</span>';
+  var bubble = document.createElement('div');
+  bubble.className = 'bubble ' + extraClass;
+  bubble.innerHTML = html;
+  div.appendChild(av);
+  div.appendChild(bubble);
+  chat.appendChild(div);
+
+  if (role === 'assistant') {
+    // Scroll the user's question (previous sibling msg) into view so reading
+    // starts from the question, not the bottom of a long response.
+    var allMsgs = chat.querySelectorAll('.msg');
+    var userMsg = allMsgs[allMsgs.length - 2]; // second-to-last is the user turn
+    if (userMsg) {
+      userMsg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      chat.scrollTop = chat.scrollHeight;
+    }
+  } else {
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  return bubble;
+}
+
+function showLoading() {
+  var chat = document.getElementById('chat');
+  var div = document.createElement('div');
+  div.className = 'loading-msg';
+  div.id = 'loading';
+  var av = document.createElement('div');
+  av.className = 'avatar';
+  av.style.cssText = 'width:36px;height:36px;border-radius:50%;background:#1B3A6B;border:1px solid #2A5A9C;display:flex;align-items:center;justify-content:center;color:#C9A84C;font-size:16px;flex-shrink:0;margin-top:2px;';
+  av.innerHTML = '<span style="color:#C9A84C;font-family:Segoe UI Symbol,Apple Symbols,Arial Unicode MS,serif;font-style:normal;">&#x2626;&#xFE0E;</span>';
+  var dots = document.createElement('div');
+  dots.className = 'loading-dots';
+  var phrases = ['Searching Holy Tradition…','Consulting the Fathers…','Opening the Scriptures…','Illumining the path…','Drawing from the Well…','Unrolling the scroll…'];
+  dots.innerHTML = '<span class="loading-text">' + phrases[Math.floor(Math.random() * phrases.length)] + '</span>';
+  div.appendChild(av);
+  div.appendChild(dots);
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function removeLoading() {
+  var l = document.getElementById('loading');
+  if (l) l.remove();
+}
+
+//  API 
+async function apiGet(path) {
+  try {
+    var controller = new AbortController();
+    var timer = setTimeout(function() { controller.abort(); }, 8000);
+    // Route through Cloudflare Worker to handle CORS and auth
+    var r = await fetch(ANTHROPIC_API, {
+      method: 'GET',
+      headers: { 'X-Orthodox-Path': path },
+      signal: controller.signal
+    });
+    clearTimeout(timer);
+    if (!r.ok) return null;
+    return await r.json();
+  } catch(e) { return null; }
+}
+
+//  ICONS 
+function hasApiIcons(d) {
+  if (!d) return false;
+  return !!(d.primary_icon && d.primary_icon.url) ||
+    (Array.isArray(d.fallback_icons) && d.fallback_icons.length > 0) ||
+    (Array.isArray(d.icons) && d.icons.length > 0);
+}
+
+async function resolveIcon(term) {
+  if (!term) return null;
+  var termLower = term.trim().toLowerCase();
+  if (curatedIcons[termLower]) {
+    return { name: term, primary_icon: { url: curatedIcons[termLower], title: term }, fallback_icons: [], icons: [] };
+  }
+  var clean = encodeURIComponent(term.trim());
+  var results = await Promise.all([
+    apiGet('/icons/resolve/' + clean),
+    apiGet('/icons/related/' + clean)
+  ]);
+  if (results[0] && !results[0].detail && hasApiIcons(results[0])) return results[0];
+  if (results[1] && !results[1].detail && hasApiIcons(results[1])) return results[1];
+  return null;
+}
+
+function extractIconList(d) {
+  if (!d) return [];
+  var list = [];
+  if (d.primary_icon && d.primary_icon.url) list.push(d.primary_icon);
+  if (Array.isArray(d.fallback_icons)) list = list.concat(d.fallback_icons);
+  if (Array.isArray(d.icons)) list = list.concat(d.icons);
+  var seen = {};
+  return list.filter(function(ic) {
+    var u = ic && (ic.url || ic.thumbnail);
+    if (!u || seen[u]) return false;
+    seen[u] = true;
+    return true;
+  });
+}
+
+function buildIconHtml(icons) {
+  var show = icons.slice(0, 3);
+  if (!show.length) return '';
+  var html = '<div class="icon-row">';
+  for (var i = 0; i < show.length; i++) {
+    var ic = show[i];
+    var url = (ic.url || ic.thumbnail || '').replace(/"/g,'');
+    var cap = (ic.title || 'Holy Icon').replace(/"/g,'');
+    html += '<div class="icon-item" data-iconurl="' + url + '" data-iconcap="' + cap + '">';
+    html += '<img src="' + url + '" alt="icon" onerror="this.style.display=String.fromCharCode(110,111,110,101)"/>';
+    html += '<span class="icon-caption">' + cap + '</span>';
+    html += '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+//  LITURGICAL CARD 
+function isLiturgicalRequest(msg) {
+  var triggers = ['liturgical summary',"today's feast","today's saint","today's reading",
+    'daily summary','daily reading','calendar today','what feast','what saint',
+    'what are we celebrating','what is today','today in the church','fasting today',
+    'readings today','saints today','feast today','liturgical calendar',
+    'church calendar today','give me today','show me today','summary for today',
+    'liturgy today','what day is it liturgically','what is the church celebrating',
+    'church celebrating today','celebrating today'];
+  return triggers.some(function(t) { return msg.includes(t); });
+}
+
+async function buildLiturgicalCard(dayData) {
+  var data = dayData.data || {};
+  var goarch = data.goarch || {};
+  var primary = dayData.primary || {};
+  var liturgical = data.liturgical || {};
+
+  var goarchSaintsFeasts = Array.isArray(goarch.saints_feasts) ? goarch.saints_feasts : [];
+
+  var feastMarkers = ['annunciation','nativity','theophany','transfiguration','pentecost',
+    'pascha','palm sunday','great and holy','sunday before','sunday after','saturday before',
+    'saturday after','forefeast','afterfeast','apodosis','elevation','exaltation','cross',
+    'theotokos','ecclesiastical new year','sunday of','feast of','synaxis','ascension',
+    'presentation','circumcision','entrance','dormition','holy monday','holy tuesday',
+    'holy wednesday','holy thursday','holy friday','holy saturday'];
+
+  var feastTitlesGoarch = goarchSaintsFeasts.filter(function(n) {
+    return feastMarkers.some(function(m) { return n.toLowerCase().includes(m); });
+  });
+  var saintNamesGoarch = goarchSaintsFeasts.filter(function(n) {
+    return !feastMarkers.some(function(m) { return n.toLowerCase().includes(m); });
   });
 
-  const data = await res.json();
-  addMsg(data.response, 'bot');
+  var dataFeastTitles = (data.feasts || []).map(function(f) { return f.title || f.anchor; }).filter(Boolean);
+  var dataSaintNames = (data.saints || []).map(function(s) { return s.name || s.title; }).filter(Boolean);
+
+  var allFeastTitles = Array.from(new Set(feastTitlesGoarch.concat(dataFeastTitles)));
+  var allSaintNames = Array.from(new Set(saintNamesGoarch.concat(dataSaintNames)));
+
+  var primaryTitle = primary.title || allFeastTitles[0] || goarchSaintsFeasts[0] || 'Ordinary Day';
+
+  // Remove primary feast title from saints list if it appears there (avoids duplication)
+  var primaryTitleLower = primaryTitle.toLowerCase();
+  allSaintNames = allSaintNames.filter(function(nm) {
+    return nm.toLowerCase() !== primaryTitleLower;
+  });
+
+  var fastingNote = goarch.fasting_note || (data.fasting && data.fasting.notes) || null;
+  var fastingObj = data.fasting || {};
+  var fastLabel = 'No Fast', fastIcon = '🍞';
+  if (fastingNote && fastingNote.toLowerCase() === 'fast free') { fastLabel = 'Fast Free'; fastIcon = '✨'; }
+  else if (fastingNote && fastingNote.toLowerCase() === 'strict fast') { fastLabel = 'Strict Fast'; fastIcon = '🌿'; }
+  else if (fastingNote && fastingNote.toLowerCase().startsWith('fast day')) { fastLabel = fastingNote; fastIcon = '🌿'; }
+  else if (fastingObj.is_fast && fastingObj.type === 'strict') { fastLabel = 'Strict Fast'; fastIcon = '🌿'; }
+  else if (fastingObj.is_fast) { fastLabel = fastingObj.notes || 'Fast Day'; fastIcon = '🌿'; }
+  else if (fastingNote) { fastLabel = fastingNote; fastIcon = '🌿'; }
+
+  var readings = data.readings || [];
+  var tone = liturgical.tone ? 'Tone ' + liturgical.tone : null;
+  var season = liturgical.season || null;
+
+  var nowD = new Date();
+  var dateStr = dayData.date || (nowD.getFullYear() + '-' + String(nowD.getMonth()+1).padStart(2,'0') + '-' + String(nowD.getDate()).padStart(2,'0'));
+  var dateObj = new Date(dateStr + 'T12:00:00');
+  var displayDate = dateObj.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  var html = '<div class="liturgical-card">';
+  html += '<div class="lc-header"><span class="lc-cross"><span style="color:#C9A84C;font-family:Segoe UI Symbol,Apple Symbols,serif;font-style:normal;">&#x2626;&#xFE0E;</span></span><div><div class="lc-date">' + displayDate + '</div><div class="lc-primary-feast">' + primaryTitle + '</div></div></div>';
+
+  var meta = [];
+  if (tone) meta.push('<span class="lc-meta-chip">🎵 ' + tone + '</span>');
+  if (season) meta.push('<span class="lc-meta-chip">📅 ' + season + '</span>');
+  meta.push('<span class="lc-meta-chip">' + fastIcon + ' ' + fastLabel + '</span>');
+  html += '<div class="lc-meta-row">' + meta.join('') + '</div>';
+
+  if (allFeastTitles.length > 0) {
+    html += '<div class="lc-section"><div class="lc-section-title">✝ Feasts</div>';
+    html += allFeastTitles.map(function(t) { return '<div class="lc-feast-item">' + t + '</div>'; }).join('');
+    html += '</div>';
+  }
+
+  if (allSaintNames.length > 0) {
+    html += '<div class="lc-section"><div class="lc-section-title">☩ Saints Commemorated</div>';
+    html += '<ul style="list-style:none;padding:0;margin:0;">';
+    allSaintNames.forEach(function(nm) {
+      html += '<li style="padding:5px 0;border-bottom:1px solid rgba(42,90,156,0.15);color:#F0E6CC;font-size:0.9rem;">☩ ' + nm + '</li>';
+    });
+    html += '</ul>';
+    html += '</div>';
+  }
+
+  if (readings.length > 0) {
+    html += '<div class="lc-section"><div class="lc-section-title">📖 Readings</div><div class="lc-readings">';
+    readings.forEach(function(r) {
+      var type = r.type || 'Reading';
+      var ref = r.ref || r.passage || r.reference || '';
+      var desc = r.description || r.title || '';
+      html += '<div class="lc-reading-item"><span class="lc-reading-type">' + type + '</span><span class="lc-reading-ref">' + ref + (desc ? ' — ' + desc : '') + '</span></div>';
+    });
+    html += '</div></div>';
+  }
+
+  if (allFeastTitles.length === 0 && allSaintNames.length === 0 && readings.length === 0) {
+    html += '<div class="lc-section"><p style="color:#B8C8DC;font-style:italic;">No liturgical data returned for today. The calendar may not have data for this date.</p></div>';
+  }
+
+  html += '</div>';
+  return html;
 }
 
-</script>
+//  FETCH API DATA 
+async function fetchApiData(userMessage) {
+  var msg = userMessage.toLowerCase();
+  var results = {};
 
-</body>
+  // ── Liturgical path (unchanged) ──
+  if (isLiturgicalRequest(msg)) {
+    var now = new Date();
+    var today = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+    var day = await apiGet('/day/' + today);
+    if (day) results.day = day;
+    results._isLiturgicalSummary = true;
+    return results;
+  }
+
+  // ── Date query (unchanged) ──
+  var dateMatch = msg.match(/\b(\d{4}-\d{2}-\d{2})\b/);
+  if (dateMatch) {
+    var dayByDate = await apiGet('/day/' + dateMatch[1]);
+    if (dayByDate) results.day = dayByDate;
+  }
+
+  // ── Pre-processor: classify question + extract canonical corpus keys ──
+  var pre = preprocessQuery(userMessage);
+  results._questionType = pre.type;
+  results._preprocessKeys = pre.keys; // preserved for chip generation fallback
+
+  // ── Tier 1 attempt: try pre-processor keys before falling back to raw string match ──
+  var resolvedPreKey = null;
+  for (var pi = 0; pi < pre.keys.length; pi++) {
+    var preKey = pre.keys[pi];
+    var preHits = await Promise.all([
+      apiGet('/topics/' + preKey),
+      apiGet('/topics/' + preKey + '/sources'),
+      apiGet('/topics/' + preKey + '/greek'),
+      apiGet('/topics/' + preKey + '/related')
+    ]);
+    if (preHits[0] && !preHits[0].detail) {
+      results.topic = preHits[0];
+      if (preHits[1] && !preHits[1].detail) results.topicSources = preHits[1];
+      if (preHits[2] && !preHits[2].detail) results.topicGreek = preHits[2];
+      if (preHits[3] && !preHits[3].detail) results.topicRelated = preHits[3];
+      resolvedPreKey = preKey;
+      results._resolvedPreKey = preKey; // expose to sendMessage scope
+      break; // first hit wins; don't overwrite with a weaker fallback key
+    }
+  }
+
+  // salvation/sources is a complete topic_source_links entry containing Irenaeus,
+  // Cassian, and Athanasius. No supplementary fetch needed — trust the endpoint.
+
+  // Q10 FIX (Test 2): When nepsis resolves, fetch Philokalia Greek term sources.
+  // Philokalia was fetching (14.4kB late call) but not rendering in model context.
+  // MUST stay inside fetchApiData — resolvedPreKey is local to this function only.
+  if (resolvedPreKey === 'nepsis') {
+    var philSrc = await apiGet('/greek/philokalia/sources');
+    if (philSrc && !philSrc.detail) {
+      if (!results.topicGreek) {
+        results.topicGreek = philSrc;
+      } else if (results.topicGreek.results) {
+        results.topicGreek.results = (results.topicGreek.results || []).concat(
+          (philSrc.results || [])
+        );
+      }
+    }
+    // Q10 FIX (Test 6): Hesychios dominates first 25 of nepsis list (8x).
+    // Merge hesychasm sources to ensure Evagrios, Gregory of Sinai, Mark the Ascetic surface.
+    var hesychSrc = await apiGet('/topics/hesychasm/sources');
+    if (hesychSrc && !hesychSrc.detail && hesychSrc.results) {
+      if (!results.topicSources) {
+        results.topicSources = hesychSrc;
+      } else if (results.topicSources.results) {
+        // Merge unique entries — avoid duplicating authors already in nepsis list
+        var existingIds = new Set((results.topicSources.results || []).map(function(s){ return s.id; }));
+        var toAdd = (hesychSrc.results || []).filter(function(s){ return !existingIds.has(s.id); });
+        results.topicSources.results = (results.topicSources.results || []).concat(toAdd);
+      }
+    }
+  }
+
+  // ── Feast map (safety net; only runs when no day result yet) ──
+  var feastMap = {
+    'pascha':'holy_pascha','easter':'holy_pascha','nativity of christ':'nativity_of_christ',
+    'christmas':'nativity_of_christ','theophany':'holy_theophany','epiphany':'holy_theophany',
+    'pentecost':'holy_pentecost','transfiguration':'transfiguration_of_christ',
+    'dormition':'dormition_of_the_theotokos','assumption':'dormition_of_the_theotokos',
+    'annunciation':'annunciation_of_the_theotokos','palm sunday':'palm_sunday',
+    'ascension':'holy_ascension','presentation of christ':'presentation_of_christ',
+    'entrance of the theotokos':'entrance_of_the_theotokos',
+    'nativity of the theotokos':'nativity_of_the_theotokos',
+    'elevation of the cross':'elevation_of_the_holy_cross'
+  };
+  if (!results.day) {
+    var feastKeys = Object.keys(feastMap);
+    for (var fi = 0; fi < feastKeys.length; fi++) {
+      if (msg.includes(feastKeys[fi])) {
+        var feastId = feastMap[feastKeys[fi]];
+        // Always fetch sources — no longer gated on keyword hints
+        var feastResults = await Promise.all([
+          apiGet('/feasts/' + feastId),
+          apiGet('/feasts/' + feastId + '/sources')
+        ]);
+        if (feastResults[0] && !feastResults[0].detail) {
+          results.feast = feastResults[0];
+          if (feastResults[1] && !feastResults[1].detail) results.feastSources = feastResults[1];
+          resolveIcon(feastId.replace(/_/g, ' ')).then(function(ic) { if (ic) results.relatedIcons = ic; });
+
+          // P6 FIX: For the Pascha feast, also fetch the paschal_homily topic sources
+          // so Chrysostom's Paschal Homily is always included alongside the feast data.
+          if (feastId === 'holy_pascha') {
+            var paschalHomilySrc = await apiGet('/topics/paschal_homily/sources');
+            if (paschalHomilySrc && !paschalHomilySrc.detail) {
+              // Merge into feastSources so the model sees Chrysostom's homily entries
+              if (!results.topicSources) {
+                results.topicSources = paschalHomilySrc;
+              } else if (results.topicSources.results) {
+                results.topicSources.results = (results.topicSources.results || []).concat(
+                  (paschalHomilySrc.results || [])
+                );
+              }
+            }
+            // Also fetch the paschal_homily topic node itself for description + linked terms
+            var paschalTopic = await apiGet('/topics/paschal_homily');
+            if (paschalTopic && !paschalTopic.detail && !results.topic) {
+              results.topic = paschalTopic;
+            }
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  // ── Greek terms — always fetch sources when a term is recognised ──
+  // DUAL PAYLOAD FIX (Test 3): Skip Greek term fetch if the preprocessor already resolved
+  // this exact term as the primary topic — avoids firing 2 redundant parallel calls on
+  // queries like "What is theosis?" where both paths would hit the same corpus entry.
+  var skipGreekFetch = results.topic && results._resolvedPreKey &&
+    ['theosis','hesychasm','hesychia','nepsis','apatheia','metanoia','synergia'].indexOf(results._resolvedPreKey) !== -1;
+
+  var greekTerms = ['theosis','energeia','charis','synergia','logos','nous','phronema',
+    'ousia','hypostasis','kenosis','metanoia','agape','ekklesia','mysterion',
+    'praxis','theoria','hesychasm','hesychia','apophatic','cataphatic',
+    'philokalia','philotimo','parousia','eschaton','soteriology','perichoresis','apatheia','nepsis'];
+  for (var gi = 0; gi < greekTerms.length; gi++) {
+    if (msg.includes(greekTerms[gi])) {
+      // Skip if this term was already fully resolved by the preprocessor
+      if (skipGreekFetch && greekTerms[gi] === results._resolvedPreKey) break;
+      var gterm = await apiGet('/greek/' + greekTerms[gi]);
+      if (gterm && !gterm.detail) {
+        results.greekTerm = gterm;
+
+        // Fetch Greek sources and linked topic in parallel.
+        // The /greek/{term} response contains a topics array from
+        // greek_topic_links.json — use it to fire a topic lookup so
+        // hasTopic is set in assessCorpusTier and Tier 1 is reachable.
+        var linkedTopics = gterm.topics || [];
+        var gsrcPromise = apiGet('/greek/' + greekTerms[gi] + '/sources');
+
+        // Fire topic lookup for the first linked topic if not already resolved
+        var topicPromise = (!results.topic && linkedTopics.length > 0)
+          ? Promise.all([
+              apiGet('/topics/' + linkedTopics[0]),
+              apiGet('/topics/' + linkedTopics[0] + '/sources'),
+              apiGet('/topics/' + linkedTopics[0] + '/greek'),
+              apiGet('/topics/' + linkedTopics[0] + '/related')
+            ])
+          : Promise.resolve(null);
+
+        var parallelResults = await Promise.all([gsrcPromise, topicPromise]);
+
+        // Merge Greek sources
+        var gsrc = parallelResults[0];
+        if (gsrc && !gsrc.detail) results.greekSources = gsrc;
+
+        // Merge topic results — only if topic not already set by preprocessor
+        var topicHits = parallelResults[1];
+        if (topicHits && !results.topic) {
+          if (topicHits[0] && !topicHits[0].detail) {
+            results.topic = topicHits[0];
+            if (topicHits[1] && !topicHits[1].detail) results.topicSources = topicHits[1];
+            if (topicHits[2] && !topicHits[2].detail) results.topicGreek = topicHits[2];
+            if (topicHits[3] && !topicHits[3].detail) results.topicRelated = topicHits[3];
+          }
+        }
+      }
+      break;
+    }
+  }
+
+  // ── Raw topicMap — legacy safety net for anything the pre-processor didn't catch ──
+  // This is fallback-only. preprocessQuery (above) handles the primary routing.
+  // Do not remove this block — it catches literal keyword matches (e.g. "theosis",
+  // "eucharist") that preprocessQuery's pattern-based extraction may not fire on.
+  // Sources are ALWAYS fetched here (previously gated on "source/father/quote" — removed).
+  if (!results.topic && !results.feast) {
+    var topicMap = {
+      // P1 FIX: toll houses keys
+      'toll houses':'toll_houses','aerial toll houses':'toll_houses','toll house':'toll_houses',
+      'aerial customs':'toll_houses','what happens when we die':'toll_houses',
+      'soul after death':'toll_houses','intermediate state':'toll_houses',
+      // P3 FIX: soteriology patristic key
+      'soteriology':'soteriology','how are we saved':'soteriology',
+      // P4 FIX: suffering / providence keys
+      'suffering':'suffering','theodicy':'suffering','divine providence':'divine_providence',
+      'why does god allow':'suffering','why god allow evil':'suffering',
+      // P5 FIX: sola fide dedicated key
+      'sola fide':'sola_fide','faith alone':'sola_fide','justification by faith':'sola_fide',
+      // theosis (P2) — already in topicPatterns; keep here as safety net
+      'theosis':'theosis','deification':'theosis','divinization':'theosis',
+      'salvation':'salvation','incarnation':'incarnation','resurrection':'resurrection',
+      'grace':'grace','divine energies':'divine_energies','uncreated energies':'divine_energies',
+      // FIXED R2: essence/energies and Palamas aliases
+      'essence and energies':'divine_energies','essence energies':'divine_energies',
+      'palamas':'divine_energies','palamism':'divine_energies',
+      'uncreated light':'divine_energies','hesychast theology':'divine_energies',
+      // FIXED R2: ancestral sin correct key
+      'ancestral sin':'ancestral_sin','propatorikon':'propatorikon',
+      // FIXED R2: Great Lent / Andrew of Crete
+      'great canon':'repentance','andrew of crete':'repentance',
+      'great lent':'lent','lenten triodion':'lent',
+      // FIXED R2: other religions -> mission corpus
+      'other religions':'mission','other faiths':'mission',
+      'non-christian':'mission','religious pluralism':'mission',
+      // FIXED R2: pascha/paschal homily
+      // P6 FIX: 'pascha' now tries paschal_homily first so Chrysostom is always present
+      'paschal homily':'paschal_homily','chrysostom pascha':'paschal_homily',
+      'pascha':'paschal_homily','christ is risen':'paschal_homily',
+      'holy trinity':'trinity','trinity':'trinity','prayer':'prayer',
+      'jesus prayer':'hesychasm','the jesus prayer':'hesychasm',
+      'fasting':'fasting','baptism':'baptism','chrismation':'baptism',
+      'eucharist':'eucharist','communion':'eucharist','divine liturgy':'eucharist',
+      'repentance':'repentance','confession':'repentance',
+      'iconography':'icons','why icons':'icons','veneration':'icons',
+      'theotokos':'theotokos','mother of god':'theotokos','virgin mary':'theotokos',
+      'holy spirit':'holy_spirit','eschatology':'eschatology','last things':'eschatology',
+      'holy tradition':'scripture_and_tradition','sacrament':'sacraments','mysteries':'sacraments',
+      'monasticism':'monasticism','priesthood':'priesthood',
+      // SWEEP: Passions / ascetical (Q9)
+      'passions':'passions','anger':'passions','logismoi':'logismoi',
+      'eight thoughts':'passions','eight passions':'passions',
+      'katharsis':'katharsis','ascetical struggle':'passions',
+      // SWEEP: Nepsis / watchfulness (Q10)
+      'nepsis':'nepsis','watchfulness':'nepsis',
+      'sobriety of heart':'nepsis','guarding the heart':'nepsis',
+      // SWEEP: Triodion (Q14)
+      'triodion':'triodion','lenten season':'triodion',
+      'great lent':'lent','lenten worship':'triodion',
+      // SWEEP: Predestination (Q8)
+      'predestination':'predestination','proorismos':'proorismos',
+      'foreknowledge':'predestination',
+      'once saved always saved':'once_saved_always_saved',
+      'eternal security':'once_saved_always_saved',
+      // POST-GRAPH: New canonical topic keys
+      'essence energies':'essence_energies','essence and energies':'essence_energies',
+      'divine energies':'essence_energies','palamism':'essence_energies',
+      'great canon':'great_canon','canon of andrew':'great_canon',
+      'andrew of crete':'great_canon',
+      'paschal homily':'paschal_homily','chrysostom paschal':'paschal_homily',
+      'other religions':'other_religions','other faiths':'other_religions',
+      'non-christian':'other_religions','religious pluralism':'other_religions',
+      // Graph session March 23 — new keys now seeded in corpus
+      'great lent':'great_lent','season of lent':'great_lent',
+      'synergy':'synergy','synergia':'synergy','cooperation with grace':'synergy',
+      'women ordination':'women_ordination','ordination of women':'women_ordination',
+      'recapitulation':'soteriology','anakephalaiosis':'soteriology',
+      'council of constantinople 381':'council_381','constantinople 381':'council_381',
+      'council 879':'council_879_880','council of constantinople 879':'council_879_880',
+      'gregory of cyprus':'holy_spirit',
+      'intermediate state':'intermediate_state','after death':'eschatology',
+      'image and likeness':'image_and_likeness','image of god':'image_and_likeness',
+      // Batch 42-46 new routing
+      'islam':'islam_and_orthodoxy','muslim':'islam_and_orthodoxy','muhammad':'islam_and_orthodoxy',
+      'pope':'papacy','papal primacy':'papacy','bishop of rome':'papacy','roman primacy':'papacy',
+      'prodigal son':'prodigal_son','parable of the prodigal':'prodigal_son',
+      'publican and pharisee':'publican_and_pharisee','sunday of the publican':'publican_and_pharisee',
+      'second coming':'parousia','parousia':'parousia','return of christ':'parousia',
+      'lazarus saturday':'lazarus_saturday','raising of lazarus':'lazarus_saturday',
+      'calvinism':'calvinism','calvinist':'calvinism','reformed theology':'calvinism',
+      'nil sorsky':'nepsis','paisios velichkovsky':'nepsis',
+      'barsanuphius':'repentance','kosmas aitolos':'mission'
+    };
+    var topicKeys = Object.keys(topicMap);
+    for (var ti = 0; ti < topicKeys.length; ti++) {
+      if (msg.includes(topicKeys[ti])) {
+        var topicId = topicMap[topicKeys[ti]];
+        var topicResults = await Promise.all([
+          apiGet('/topics/' + topicId),
+          apiGet('/topics/' + topicId + '/sources'),
+          apiGet('/topics/' + topicId + '/greek'),
+          apiGet('/topics/' + topicId + '/related')
+        ]);
+        if (topicResults[0] && !topicResults[0].detail) {
+          results.topic = topicResults[0];
+          if (topicResults[1] && !topicResults[1].detail) results.topicSources = topicResults[1];
+          if (topicResults[2] && !topicResults[2].detail) results.topicGreek = topicResults[2];
+          if (topicResults[3] && !topicResults[3].detail) results.topicRelated = topicResults[3];
+          if (!results.relatedIcons) {
+            var iconTermMap = {
+              'icons': 'theotokos icon', 'theosis': 'transfiguration icon',
+              'trinity': 'holy trinity icon', 'eucharist': 'last supper icon',
+              'repentance': 'prodigal son icon', 'prayer': 'jesus prayer icon',
+              'fasting': 'great lent icon', 'baptism': 'baptism of christ icon',
+              'theotokos': 'theotokos icon', 'holy_spirit': 'pentecost icon',
+              'salvation': 'resurrection icon', 'incarnation': 'nativity icon',
+              'resurrection': 'resurrection icon', 'divine_energies': 'transfiguration icon'
+            };
+            var resolveterm = iconTermMap[topicId] || topicId.replace(/_/g, ' ');
+            resolveIcon(resolveterm).then(function(ic) { if (ic) results.relatedIcons = ic; });
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  // ── Icon resolution (unchanged) ──
+  var iconMatch = msg.match(/icon of (.+?)[\.\?!]?$/i) || msg.match(/icon for (.+?)\[\.\?!\]?$/i) ||
+    msg.match(/(?:^|[^a-z])saint ([a-z][a-z]+(?: [a-z]+){0,3})/i) ||
+    msg.match(/(?:^|[^a-z])st\.? ([a-z][a-z]+(?: [a-z]+){0,2})/i);
+  if (iconMatch) {
+    var iconQuery = (iconMatch[1] || '').trim();
+    if (iconQuery) {
+      var ic = await resolveIcon(iconQuery);
+      if (ic) results.icon = ic;
+    }
+  }
+
+  // ── Scripture / patristic search fallback (unchanged) ──
+  var noData = !results.feast && !results.topic && !results.greekTerm && !results.day;
+  var scriptureRef = msg.match(/\b(john|matthew|luke|mark|romans|genesis|psalm|acts|corinthians|ephesians|hebrews|james|peter|revelation|galatians|philippians|colossians)\s+\d/i);
+  if (scriptureRef || (noData && (msg.includes('church father') || msg.includes('patristic') || msg.includes('fathers say')))) {
+    var cleaned = userMessage.replace(/[^a-zA-Z0-9 ]/g, '').trim();
+    var sources = await apiGet('/sources/search?q=' + encodeURIComponent(cleaned) + '&limit=6');
+    if (sources && !sources.detail) results.sources = sources;
+  }
+
+  // ── Tier assessment — drives response strategy in sendMessage ──
+  results._tier = assessCorpusTier(results);
+
+  return results;
+}
+
+//  DEBUG 
+async function testWorker() {
+  appendMsg('user', 'Testing Cloudflare Worker…');
+  showLoading();
+  try {
+    var res = await fetch(ANTHROPIC_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model:'claude-haiku-4-5-20251001', max_tokens:50, messages:[{role:'user',content:'Say only: Worker connected'}] })
+    });
+    removeLoading();
+    if (!res.ok) { var txt = await res.text(); appendMsg('assistant','<p style="color:#D08080">Worker error ' + res.status + ': ' + txt + '</p>','error-bubble'); return; }
+    var d = await res.json();
+    if (d.error) { appendMsg('assistant','<p style="color:#D08080">Error: ' + JSON.stringify(d.error) + '</p>','error-bubble'); return; }
+    var msg = (d.content && d.content[0] && d.content[0].text) || 'No response';
+    appendMsg('assistant', '<p style="color:#90C080">✅ ' + msg + '</p>');
+  } catch(err) { removeLoading(); appendMsg('assistant','<p style="color:#D08080">Failed: ' + err.message + '</p>','error-bubble'); }
+}
+
+async function testDayEndpoint() {
+  var now = new Date();
+    var today = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+  appendMsg('user', 'DEBUG: /day/' + today);
+  showLoading();
+  var result = await apiGet('/day/' + today);
+  removeLoading();
+  if (!result) { appendMsg('assistant','<p style="color:#D08080">API returned null</p>','error-bubble'); return; }
+  var feasts = (result.data && result.data.feasts) || [];
+  var saints = (result.data && result.data.saints) || [];
+  var readings = (result.data && result.data.readings) || [];
+  var fasting = (result.data && result.data.fasting) || {};
+  var goarch = (result.data && result.data.goarch) || {};
+  var html = '<h3>Debug: ' + today + '</h3>';
+  html += '<p><strong>Feasts (' + feasts.length + '):</strong> ' + (feasts.map(function(f){return f.title||f.anchor;}).join(', ')||'none') + '</p>';
+  html += '<p><strong>Saints (' + saints.length + '):</strong> ' + (saints.map(function(s){return s.name||s.title;}).join(', ')||'none') + '</p>';
+  html += '<p><strong>Readings (' + readings.length + '):</strong> ' + (readings.map(function(r){return r.ref||r.type;}).join(', ')||'none') + '</p>';
+  html += '<p><strong>Fasting:</strong> ' + (fasting.notes||fasting.type||'none') + '</p>';
+  html += '<p><strong>GOARCH in_cache:</strong> ' + goarch.in_cache + '</p>';
+  html += '<p><strong>GOARCH saints_feasts:</strong> ' + JSON.stringify(goarch.saints_feasts||[]).substring(0,200) + '</p>';
+  html += '<p><strong>GOARCH fasting_note:</strong> ' + (goarch.fasting_note||'none') + '</p>';
+  appendMsg('assistant', html);
+}
+
+//  SEND MESSAGE 
+async function sendMessage(overrideText) {
+  if (isLoading) return;
+  var input = document.getElementById('input');
+  var userText = (overrideText || input.value || '').trim();
+  if (!userText) return;
+
+  hideWelcome();
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('sendBtn').disabled = true;
+  isLoading = true;
+
+  appendMsg('user', escapeHtml(userText));
+  showLoading();
+
+  var apiData = await fetchApiData(userText);
+
+  // Liturgical card path
+  if (apiData._isLiturgicalSummary && apiData.day) {
+    var cardHtml = await buildLiturgicalCard(apiData.day);
+    removeLoading();
+    appendMsg('assistant', cardHtml);
+    showLoading();
+
+    var reflPrompt = [
+      "You are Orthodox Companion. The liturgical card is already displayed above.",
+      "Give a brief warm pastoral reflection on today — 2-3 short paragraphs.",
+      "Reference what is celebrated. Connect it to Christ. Meaningful for someone learning the faith.",
+      "Do NOT repeat the feast, saints, or readings as a list.",
+      "Output ONLY clean HTML with <p> tags. No markdown, no #, no **.",
+      "End with <div class='suggestions'><button class='suggestion-chip' type='button'>Question</button></div> with 2-3 chips."
+    ].join('\n');
+
+    try {
+      var reflRes = await fetch(ANTHROPIC_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 700,
+          system: reflPrompt,
+          messages: [{ role:'user', content:'Liturgical data: ' + JSON.stringify({ date:apiData.day.date, primary:apiData.day.primary, summary:apiData.day.summary, study:apiData.day.study||{} }) }]
+        })
+      });
+      var reflData = await reflRes.json();
+      var refl = sanitizeMarkdown((reflData.content || []).map(function(b){return b.text||'';}).join(''));
+      removeLoading();
+      var rb = appendMsg('assistant', refl);
+      wireChips(rb);
+      conversationHistory.push({ role:'user', content:userText });
+      conversationHistory.push({ role:'assistant', content:refl });
+    } catch(e) { removeLoading(); }
+
+    isLoading = false;
+    document.getElementById('sendBtn').disabled = false;
+    document.getElementById('input').focus();
+    return;
+  }
+
+  // Tier 3: Full corpus miss — warm pastoral redirect; no unsourced theology generated
+  if (apiData._tier === 3 && !apiData._isLiturgicalSummary) {
+    var tier3Sys = [
+      "You are Orthodox Companion — a warm Orthodox Christian guide.",
+      "The patristic corpus database returned no structured data for this question.",
+      "Write 2-3 warm, humble sentences: acknowledge the person's question with genuine care, then gently note that for this particular area the living witness of a parish priest or catechist is the right guide — not a digital tool.",
+      "Then add a <div class='suggestions'> block with 2-3 <button class='suggestion-chip' type='button'> chips pointing toward questions the tradition speaks to clearly (e.g. theosis, prayer, a Church Father, fasting, the sacraments).",
+      "Output ONLY clean HTML using <p> tags. No markdown. No speculative theology. No invented quotes.",
+      "Keep the entire response under 90 words."
+    ].join('\n');
+    try {
+      var t3Res = await fetch(ANTHROPIC_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 220,
+          system: tier3Sys,
+          messages: [{ role: 'user', content: userText }]
+        })
+      });
+      var t3Data = await t3Res.json();
+      var t3Text = sanitizeMarkdown((t3Data.content || []).map(function(b){ return b.text || ''; }).join(''));
+      removeLoading();
+      var t3Bubble = appendMsg('assistant', t3Text);
+      wireChips(t3Bubble);
+      // HISTORY ISOLATION: Tier 3 responses are intentionally excluded from both
+      // conversationHistory and sessionQuestions. A failed routing question must not
+      // become context for future turns or poison subsequent corpus queries.
+      // The `return` below exits before either push statement is reached.
+    } catch(e) {
+      removeLoading();
+      appendMsg('assistant', "<p style='color:#B8C8DC;font-style:italic;'>This question is one the tradition best answers through living relationship — please bring it to your parish priest or catechist. &#9768;</p><div class='suggestions'><button class='suggestion-chip' type='button'>What is theosis?</button><button class='suggestion-chip' type='button'>How do I begin to pray?</button><button class='suggestion-chip' type='button'>What do the Fathers say about repentance?</button></div>");
+    }
+    isLoading = false;
+    document.getElementById('sendBtn').disabled = false;
+    document.getElementById('input').focus();
+    return;
+  }
+
+  // ── SYSTEM PROMPT — rebuilt fresh on every API call ──────────────────────────
+  // GUARDRAIL STABILITY: systemPrompt is constructed here, inside sendMessage,
+  // on every single turn. It is passed as `system:` to the API on every call.
+  // The four THEOLOGICAL GUARDRAILS are therefore re-injected on every request
+  // regardless of conversation length. They cannot be eroded by multi-turn pressure.
+  // Do NOT move systemPrompt construction outside of sendMessage or cache it
+  // across turns — doing so would allow guardrail drift via conversationHistory.
+  var systemPrompt = [
+    "You are Orthodox Companion — a warm, pastoral guide to the Orthodox Christian faith.",
+    "You speak with the phronema (mind) of the Church, rooted in Holy Scripture, the Holy Fathers, and the Liturgical life of the Orthodox Church.",
+    "Your audience is primarily catechumens and those exploring Orthodoxy. Approach every question with gentleness, clarity, and deep love. Never argue, never belittle. Simply illuminate.",
+    "",
+    "CORE PRINCIPLES:",
+    "- Be Christ-centered. All roads lead to His Incarnation, Death, Resurrection, and the life He offers.",
+    "- The API data provided is your authoritative source. Never fabricate quotes, saints, feasts, or citations.",
+    "- If no API data was returned from the database, begin your response with this EXACT disclaimer in italics: <p class='notice' style='color:#B8C8DC;font-style:italic;font-size:0.9rem;border-bottom:1px solid rgba(201,168,76,0.15);padding-bottom:10px;margin-bottom:12px;'>Holy Tradition speaks to this question more broadly. What follows is a reflection rooted in the witness of Scripture and the Fathers. Orthodoxy is not merely studied — it is lived within the Body of Christ. For guidance, always seek the counsel of your parish priest or catechist. &#9768;</p> Then give your full answer.",
+    "- A topic is never just a definition — walk through it: meaning, Greek term, what the Fathers say, how it lives in the liturgy, how it applies to daily life.",
+    "- Every patristic citation must include the specific work and reference — never the Father's name alone. Correct format: 'St. Athanasius, On the Incarnation, §54' or 'St. John Chrysostom, Homilies on Matthew, Homily 50.' If a specific work and reference cannot be confirmed from the corpus data provided, do not cite it. Use only what the API sources contain.",
+    "- End every response with follow-up suggestion chips. The number required is specified by the active Response Mode below.",
+    "- Icons are displayed above your text. You may briefly reference them.",
+    "",
+    "THEOLOGICAL GUARDRAILS — these override all other instructions:",
+    "",
+    "1. SOTERIOLOGY: When comparing Orthodox and Protestant soteriology, never frame the difference as merely methodological — as though both traditions share the same goal and differ only in approach. The difference is ontological. Protestant soteriology does not share the Orthodox telos of theosis — participation in the divine energies and the transformation of the whole person into the likeness of God. Always frame the Orthodox position from within the Tradition itself, not as a variation on a Protestant framework.",
+    "",
+    "2. DIVINE IMPASSIBILITY: God in His divine nature is impassible — He does not suffer. But in Christ, true God and true man, He suffered genuinely in His human nature. Divine impassibility and Christ's real compassion are not in tension — they are held together in the mystery of the Incarnation. Never state that God suffers or that God experiences suffering in His divine nature. Divine compassion (sympatheia) is real, but it must always be grounded in the Incarnation and the two natures of Christ. SPECIFIC FORBIDDEN PHRASING: Never use constructions like 'God's compassion rather than divine impassibility' or 'love rather than impassibility' — these falsely imply a contradiction between divine compassion and divine impassibility where none exists in Orthodox theology. The correct formulation affirms both simultaneously: God is fully impassible in His divine nature AND genuinely compassionate through Christ's human nature — neither truth collapses into the other.",
+    "",
+    "3. SALVATION AND OTHER RELIGIONS: When addressing other religions or God's mercy toward non-Christians, answer from Orthodox missionary theology. Do NOT deflect — give a substantive Orthodox answer. (a) All truth belongs to the Logos (John 1:9) — wherever authentic truth, goodness, or beauty exists in the world, it belongs to Christ whether it is recognised as His or not. Affirm this confidently, as the Fathers do. (b) The fullness of saving truth is found in the Orthodox Church — the Body of Christ, where the Holy Spirit dwells in fullness. State this clearly. These two truths must never be collapsed into soteriological inclusivism — the suggestion that other religious paths are valid or equivalent means of salvation. Do not imply the Church and other religions are parallel paths to the same destination. The judgment of individual souls belongs to God alone, but the Church never speculates about equivalent salvific paths outside of Christ and His Body. Be firm on ecclesiology, confident on the Logos, Christocentric throughout. Never deflect this question to a priest alone — give the Orthodox answer first.",
+    "",
+    "4. LATIN/ROMAN CATHOLIC TERMINOLOGY: Never use Roman Catholic scholastic theological terminology. Terms explicitly forbidden: 'in persona Christi' (use 'the priest as icon (eikon) of Christ'), 'transubstantiation' (use 'the Body and Blood of Christ truly present'), 'merit' in the Anselmian sense, 'satisfaction theory' as an Orthodox account of atonement, 'purgatory' (use 'the state of souls after death' or the toll houses if patristically warranted), 'Pope' as a title of universal jurisdiction, 'Immaculate Conception.' When the Filioque appears in an apologetic context, present it clearly as a heterodox innovation rejected by the Orthodox Church — never as an accepted or neutral doctrine.",
+    "",
+    "API DATA GUIDE:",
+    "- topic: description, related_topics — primary doctrinal content",
+    "- topicGreek: explain Greek terms naturally in the response",
+    "- topicRelated: weave in as natural extensions",
+    "- topicSources/feastSources/greekSources: quote with clear attribution",
+    "- feast: use primary_focus, linked_topics, linked_greek_terms",
+    "- greekTerm: use definition, pastoral_note, related_terms",
+    "",
+    "FORMATTING — OUTPUT ONLY CLEAN HTML:",
+    "1. NEVER use # for headings. Use <h3>Title</h3>.",
+    "2. NEVER use ** for bold. Use <strong>word</strong>.",
+    "3. NEVER use markdown bullets. Use <p> tags.",
+    "4. Patristic quotes — MANDATORY FORMAT: <blockquote>quote text</blockquote><p class='attribution'>— St. Father Name, Work Title, Locator</p>. The attribution line MUST include the full work title and specific locator (chapter, section, homily number). NEVER embed citations inline as '(Work, Locator)' or 'quote text (Work, Locator)'. NEVER put only the Father's name in the attribution line without the work and locator. This format is non-negotiable in all modes.",
+    "5. Greek terms: <span class='greek-term'>word (transliteration)</span>",
+    "6. End EVERY response with follow-up suggestion chips in this exact format: <div class='suggestions'><button class='suggestion-chip' type='button'>Question</button></div>. The number of chips is determined by the active Response Mode.",
+    "",
+    "CALENDAR NOTE: Revised Julian (New Calendar) unless otherwise noted.",
+    "IMPORTANT: Only use Greek theological terms you are certain of. Never fabricate or guess Greek terminology. If uncertain, describe the concept in English instead. Stick to well-attested terms like theosis, metanoia, synergia, logos, nous, hesychia, phronema, agape, ekklesia.",
+    "",
+    getModeInstructions(),
+    getQuestionTypeInstructions(apiData._questionType || 'definitional'),
+    apiData._tier === 2 ? "\nCORPUS NOTE: The database returned limited sources for this question. Use what was returned as your primary anchor. You may note briefly that Holy Tradition speaks more broadly than these sources alone capture — but do not fabricate citations or invent Fathers to fill the gap." : ''
+  ].join('\n');
+
+  var dataKeys = Object.keys(apiData).filter(function(k) { return k !== '_isLiturgicalSummary'; });
+  // Slim the API data before serializing into context — topics like theosis
+  // return 400+ source IDs in linked_source_ids arrays that Claude never needs.
+  // Keep only the resolved source results and drop raw ID arrays
+  // to prevent context window overflow on multi-turn conversations.
+  // Cap is mode-aware: Simple Answer needs fewer sources, Sources Only needs more.
+  // Simple Answer: 10 — brief response, shallow sourcing sufficient
+  // Study Mode:    25 — structured depth, needs breadth across Fathers
+  // Sources Only:  40 — direct citation mode, maximum coverage needed
+  var sourceCap = currentMode === 'deep' ? 40 : currentMode === 'study' ? 25 : 10;
+  var slimApiData = JSON.parse(JSON.stringify(apiData));
+  ['topicSources', 'greekSources', 'feastSources'].forEach(function(key) {
+    if (slimApiData[key]) {
+      slimApiData[key] = {
+        results: (slimApiData[key].results || []).slice(0, sourceCap),
+        results_count: slimApiData[key].results_count
+      };
+    }
+  });
+  if (slimApiData.topic) delete slimApiData.topic.linked_source_ids;
+  if (slimApiData.topicSources) delete slimApiData.topicSources.linked_source_ids;
+  if (slimApiData.greekSources) delete slimApiData.greekSources.linked_source_ids;
+  if (slimApiData.feastSources) delete slimApiData.feastSources.linked_source_ids;
+
+  var contextBlock = dataKeys.length > 0
+    ? '\n\n[ORTHODOX SOURCES API DATA]:\n' + JSON.stringify(slimApiData, null, 2)
+    : '\n\n[ORTHODOX SOURCES API]: No structured data returned. Provide a faithful Orthodox explanation from general Holy Tradition.';
+
+  // salvation/sources is a complete topic_source_links entry containing Irenaeus,
+  // Cassian, and Athanasius. No supplementary fetch needed — trust the endpoint.
+  // mark_ephesus → toll_houses permanent graph edge in theology_edges.json (March 23).
+  // DO NOT re-add a runtime cross-fetch here — the graph is authoritative.
+
+  // Add session memory if previous questions exist
+  if (sessionQuestions.length > 1) {
+    var prevQs = sessionQuestions.slice(-4, -1);
+    contextBlock += '\n\n[SESSION CONTEXT - earlier questions this conversation]: ' +
+      prevQs.map(function(q,i){ return (i+1)+'. '+q; }).join(' | ') +
+      '. If relevant, make natural connections to these earlier topics without re-answering them fully.';
+  }
+
+  conversationHistory.push({ role:'user', content: userText + contextBlock });
+
+  // ── Analytics fields — prefixed with _ so Worker strips them before forwarding to Anthropic ──
+  var modeLabel = { 'explore': 'simple', 'study': 'study', 'deep': 'sources_only' };
+  var corpusHit = apiData._tier < 3;
+  var missType  = null;
+  if (apiData._tier === 3) {
+    missType = (!apiData._preprocessKeys || apiData._preprocessKeys.length === 0) ? 'routing_gap' : 'corpus_gap';
+  }
+
+  // ── New fields ──
+  questionIndex++;
+  var currentTopicKeys = apiData._preprocessKeys || [];
+  var repeatTopic      = currentTopicKeys.some(function(k) { return sessionTopicsSeen.indexOf(k) !== -1; });
+  var modeSwitch       = lastModeSent !== null && lastModeSent !== (modeLabel[currentMode] || currentMode);
+  var capturedSource   = nextQuestionSource;
+  var capturedPrior    = nextPriorTopic;
+
+  // Reset source trackers immediately — don't let them bleed into next question
+  nextQuestionSource = 'direct';
+  nextPriorTopic     = null;
+  lastModeSent       = modeLabel[currentMode] || currentMode;
+
+  try {
+    var res = await fetch(ANTHROPIC_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1600,
+        stream: true,
+        system: systemPrompt,
+        messages: conversationHistory,
+        _sessionId:      sessionId,
+        _mode:           modeLabel[currentMode] || currentMode,
+        _questionType:   apiData._questionType  || 'unknown',
+        _topicKeys:      currentTopicKeys,
+        _tierResult:     apiData._tier           || null,
+        _corpusHit:      corpusHit,
+        _missType:       missType,
+        _source:         capturedSource,
+        _questionIndex:  questionIndex,
+        _priorTopic:     capturedPrior,
+        _testerTag:      testerTag,
+        _modeSwitch:     modeSwitch ? 1 : 0,
+        _repeatTopic:    repeatTopic ? 1 : 0
+      })
+    });
+
+    if (!res.ok) {
+      removeLoading();
+      appendMsg('assistant', '<p>Something went wrong connecting to the server (' + res.status + '). Please try again.</p>', 'error-bubble');
+    } else {
+      // ── Streaming path ──────────────────────────────────────────────────
+      // Create the bubble once here. Never call appendMsg again in this path.
+      // All subsequent updates are in-place mutations of this single bubble.
+      removeLoading();
+      var chatEl = document.getElementById('chat');
+      var bubble = appendMsg('assistant', '<span class="stream-cursor"></span>');
+      var fullText = '';
+      var streamBuffer = '';
+      var streamDone = false;
+
+      // Pin the scroll position to the user's question for the entire stream.
+      // Capture the chat's scrollTop immediately after appendMsg fires its
+      // scrollIntoView — then re-apply it on every chunk so growing bubble
+      // height doesn't pull the view down.
+      // RELEASE: if the user intentionally scrolls during generation, stop
+      // pinning — they want to read ahead and we should not fight them.
+      var pinnedScrollTop = chatEl.scrollTop;
+      var userScrolledDuringStream = false;
+      var scrollReleaseHandler = function() {
+        // If scroll position moved significantly more than pin (user-initiated)
+        if (Math.abs(chatEl.scrollTop - pinnedScrollTop) > 40) {
+          userScrolledDuringStream = true;
+          chatEl.removeEventListener('scroll', scrollReleaseHandler);
+        }
+      };
+      chatEl.addEventListener('scroll', scrollReleaseHandler);
+
+      try {
+        var reader = res.body.getReader();
+        var decoder = new TextDecoder();
+
+        while (!streamDone) {
+          var chunk = await reader.read();
+          if (chunk.done) { streamDone = true; break; }
+
+          streamBuffer += decoder.decode(chunk.value, { stream: true });
+          var lines = streamBuffer.split('\n');
+          streamBuffer = lines.pop(); // hold incomplete line for next chunk
+
+          for (var li = 0; li < lines.length; li++) {
+            var line = lines[li].trim();
+            if (!line.startsWith('data: ')) continue;
+            var dataStr = line.slice(6).trim();
+            if (!dataStr || dataStr === '[DONE]') continue;
+            try {
+              var evt = JSON.parse(dataStr);
+              if (evt.type === 'content_block_delta' &&
+                  evt.delta && evt.delta.type === 'text_delta' &&
+                  evt.delta.text) {
+                fullText += evt.delta.text;
+                bubble.innerHTML = sanitizeMarkdown(fullText) + '<span class="stream-cursor"></span>';
+                // Re-pin scroll only if user hasn't manually scrolled away
+                if (!userScrolledDuringStream) {
+                  chatEl.scrollTop = pinnedScrollTop;
+                }
+              }
+            } catch(parseErr) { /* incomplete SSE chunk — skip and continue */ }
+          }
+        }
+      } catch(streamErr) {
+        chatEl.removeEventListener('scroll', scrollReleaseHandler);
+        // Stream read error — if we got partial content show it, otherwise show error
+        if (!fullText) {
+          bubble.innerHTML = '<p>Stream interrupted. Please try again.</p>';
+          bubble.className += ' error-bubble';
+          isLoading = false;
+          document.getElementById('sendBtn').disabled = false;
+          document.getElementById('input').focus();
+          return;
+        }
+      }
+
+      // Clean up scroll listener
+      chatEl.removeEventListener('scroll', scrollReleaseHandler);
+
+      // ── Stream complete — finalise once, wire once ───────────────────────
+      // Brief completion flash on the bubble border so the user knows
+      // generation is finished and they can freely scroll.
+      var finalText = sanitizeMarkdown(fullText);
+      bubble.innerHTML = finalText;
+      bubble.style.borderLeftColor = '#C9A84C';
+      setTimeout(function() { bubble.style.borderLeftColor = ''; }, 800);
+
+      conversationHistory[conversationHistory.length - 1].content = userText;
+      conversationHistory.push({ role: 'assistant', content: finalText });
+      sessionQuestions.push(userText);
+
+      // ── Record topics seen this session — for repeat detection ────────────
+      currentTopicKeys.forEach(function(k) {
+        if (sessionTopicsSeen.indexOf(k) === -1) sessionTopicsSeen.push(k);
+      });
+
+      // ── Tier 3 miss ping — best effort, fire-and-forget ──────────────────
+      if (apiData._tier === 3) {
+        fetch(ANTHROPIC_API + '/log-miss', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId:     sessionId,
+            topicKeys:     currentTopicKeys,
+            missType:      missType,
+            testerTag:     testerTag,
+            questionIndex: questionIndex
+          })
+        }).catch(function() {});
+      }
+
+      wireChips(bubble);
+      addRelatedTopics(bubble, apiData);
+      addCopyButton(bubble);
+      addShareButton(bubble, userText, finalText);
+      addSaveButton(bubble, userText, finalText);
+      addAudioButton(bubble, finalText);
+    }
+
+  } catch(err) {
+    removeLoading();
+    appendMsg('assistant', '<p>Something went wrong connecting to the server (' + err.message + '). Please try again.</p>', 'error-bubble');
+  }
+
+  isLoading = false;
+  document.getElementById('sendBtn').disabled = false;
+  document.getElementById('input').focus();
+}
+</script></body>
 </html>

@@ -1,0 +1,22 @@
+{
+  "name": "Orthodox Companion",
+  "short_name": "Orthodox",
+  "description": "An Orthodox Christian companion for understanding and living the faith — doctrine, feasts, the Church Fathers, prayer, and icons.",
+  "start_url": "/orthodox-companion-/",
+  "display": "standalone",
+  "background_color": "#0A1628",
+  "theme_color": "#0F2035",
+  "icons": [
+    {
+      "src": "cross.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

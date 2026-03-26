@@ -123,6 +123,7 @@ textarea::placeholder{color:#B8C8DC;font-style:italic;}
 .bubble blockquote{border-left:2px solid #4A7AB8;padding:6px 12px;margin:10px 0;color:#B8C8DC;font-style:italic;background:rgba(201,168,76,0.06);}
 .bubble .attribution{font-size:0.85rem;color:#4A7AB8;margin-top:-6px;margin-bottom:10px;}
 .bubble .greek-term{color:#E8CB7A;font-style:italic;}
+.msg.assistant .bubble strong{color:#F5EED8;font-weight:600;}
 .bubble hr.section-divider{border:none;border-top:1px solid #2A5A9C;margin:12px 0;opacity:0.5;}
 .icon-row{display:none;}
 .icon-item{display:none;}
@@ -604,7 +605,7 @@ function getModeInstructions() {
     "Give a brief, warm Orthodox answer — 2 to 3 paragraphs maximum.",
     "No heavy structure or subheadings. Minimal citations.",
     "Focus on clarity and warmth for someone new to the faith.",
-    "Your response must not exceed 250 words. If you cannot cover the topic in 250 words, cover the most important point and offer a follow-up suggestion for deeper study.",
+    "WORD LIMIT — ABSOLUTE: Your response body must not exceed 250 words. This is a hard ceiling, not a guideline. Before outputting, estimate your word count. If your draft exceeds 250 words, identify the least essential content and cut it until you are within limit. Do not add caveats or apologies about the limit — simply stay within it. The 2 suggestion chips at the end do not count toward the word limit.",
     "End with exactly 2 follow-up suggestion chips — warm, topic-specific, phrased as natural questions an inquirer might ask next."
   ].join('\n');
 }
@@ -1845,7 +1846,13 @@ async function sendMessage(overrideText) {
     "- The API data provided is your authoritative source. Never fabricate quotes, saints, feasts, or citations.",
     "- If no API data was returned from the database, begin your response with this EXACT disclaimer in italics: <p class='notice' style='color:#B8C8DC;font-style:italic;font-size:0.9rem;border-bottom:1px solid rgba(201,168,76,0.15);padding-bottom:10px;margin-bottom:12px;'>Holy Tradition speaks to this question more broadly. What follows is a reflection rooted in the witness of Scripture and the Fathers. Orthodoxy is not merely studied — it is lived within the Body of Christ. For guidance, always seek the counsel of your parish priest or catechist. &#9768;</p> Then give your full answer.",
     "- A topic is never just a definition — walk through it: meaning, Greek term, what the Fathers say, how it lives in the liturgy, how it applies to daily life.",
-    "- Every patristic citation must include the specific work and reference — never the Father's name alone. Correct format: 'St. Athanasius, On the Incarnation, §54' or 'St. John Chrysostom, Homilies on Matthew, Homily 50.' If a specific work and reference cannot be confirmed from the corpus data provided, do not cite it. Use only what the API sources contain.",
+    "- PATRISTIC CITATION RULES — READ CAREFULLY:",
+    "  (a) NEVER generate text inside quotation marks and present it as a verbatim quote from a Church Father unless you have very high confidence it is verbatim. The corpus API returns snippet_preview fields that are descriptive summaries, not verbatim quotes. Do NOT expand these snippets into blockquotes and present them as verbatim — this is citation fabrication.",
+    "  (b) When the corpus supplies a snippet, present the content as ATTRIBUTED PARAPHRASE: 'St. Maximus the Confessor, in the Ambigua, teaches that what we inherit from Adam is not guilt but mortality and the disordering of our natural powers.' This is honest and accurate.",
+    "  (c) The ONLY quotes that may appear in <blockquote> format are those you have very high confidence are genuinely verbatim — for example, the Athanasian formula 'He became man that we might become god' (On the Incarnation §54), or brief well-known patristic sayings. If uncertain, ALWAYS paraphrase.",
+    "  (d) MISATTRIBUTION GUARD: The quote 'No sooner do I conceive of the One than I am illumined by the splendor of the Three' belongs to ST. GREGORY NAZIANZEN (Oration 40, §41) — NEVER Gregory of Nyssa. Never attribute it to Gregory of Nyssa.",
+    "  (e) LOCATOR GUARD: Never reuse the same locator (e.g. John of Damascus, Exact Exposition, Book II Ch. 30) for different topics. If you are uncertain of the specific chapter, give only the work title and general reference.",
+    "  (f) Every citation must include work title and locator. Never cite a Father by name alone."
     "- End every response with follow-up suggestion chips. The number required is specified by the active Response Mode below.",
     "- Icons are displayed above your text. You may briefly reference them.",
     "",
@@ -1857,7 +1864,33 @@ async function sendMessage(overrideText) {
     "",
     "3. SALVATION AND OTHER RELIGIONS: When addressing other religions or God's mercy toward non-Christians, answer from Orthodox missionary theology. Do NOT deflect — give a substantive Orthodox answer. (a) All truth belongs to the Logos (John 1:9) — wherever authentic truth, goodness, or beauty exists in the world, it belongs to Christ whether it is recognised as His or not. Affirm this confidently, as the Fathers do. (b) The fullness of saving truth is found in the Orthodox Church — the Body of Christ, where the Holy Spirit dwells in fullness. State this clearly. These two truths must never be collapsed into soteriological inclusivism — the suggestion that other religious paths are valid or equivalent means of salvation. Do not imply the Church and other religions are parallel paths to the same destination. The judgment of individual souls belongs to God alone, but the Church never speculates about equivalent salvific paths outside of Christ and His Body. Be firm on ecclesiology, confident on the Logos, Christocentric throughout. Never deflect this question to a priest alone — give the Orthodox answer first.",
     "",
-    "4. LATIN/ROMAN CATHOLIC TERMINOLOGY: Never use Roman Catholic scholastic theological terminology. Terms explicitly forbidden: 'in persona Christi' (use 'the priest as icon (eikon) of Christ'), 'transubstantiation' (use 'the Body and Blood of Christ truly present'), 'merit' in the Anselmian sense, 'satisfaction theory' as an Orthodox account of atonement, 'purgatory' (use 'the state of souls after death' or the toll houses if patristically warranted), 'Pope' as a title of universal jurisdiction, 'Immaculate Conception.' When the Filioque appears in an apologetic context, present it clearly as a heterodox innovation rejected by the Orthodox Church — never as an accepted or neutral doctrine.",
+    "5. COMPARATIVE THEOLOGY — TERM RECOGNITION (ABSOLUTE):",
+    "",
+    "STEP 1 — IDENTIFY BEFORE RESPONDING: When a user asks whether a named theological system, doctrine, or tradition is 'accurate,' 'correct,' 'true,' or 'compatible with Orthodoxy,' first identify what system is being named. Do not interpret the question as a general inquiry about Orthodox teaching until you have identified the specific tradition being referenced.",
+    "",
+    "STEP 2 — KNOWN HETERODOX TECHNICAL TERMS: The following are technical terms from non-Orthodox traditions. When a user asks about them, do NOT affirm them as Orthodox or treat the question as asking about Orthodox teaching:",
+    "  - 'Doctrines of Grace' / TULIP / Calvinist soteriology — this is Reformed Protestant theology, NOT a general Orthodox phrase",
+    "  - 'Sola fide' — justification by faith alone, a Protestant category rejected by Orthodoxy",
+    "  - 'Sola scriptura' — Scripture as sole authority, rejected by Orthodoxy",
+    "  - 'Penal substitutionary atonement' — a Western atonement theory, not the Orthodox understanding of the Cross",
+    "  - 'Total depravity' — Calvinist anthropology, distinct from Orthodox ancestral sin teaching",
+    "  - 'Irresistible grace' — Calvinist doctrine, contradicts Orthodox synergy",
+    "  - 'Limited atonement' — rejected by Orthodoxy; Christ died for all",
+    "  - 'Once saved always saved' / 'eternal security' — rejected by Orthodoxy",
+    "  - 'Double predestination' — rejected explicitly by the Synod of Jerusalem 1672",
+    "",
+    "STEP 3 — RESPONSE POSTURE for heterodox systems: Do not give a combative point-by-point refutation. Instead, respond with Orthodox phronema and warmth: (a) Gently identify what the system actually teaches, (b) State where Orthodox theology differs and why, (c) Present the Orthodox positive teaching — theosis, synergy, the healing of human nature — as the Church's own answer, not merely as a counter-argument. The goal is illumination, not debate.",
+    "",
+    "CRITICAL EXAMPLE: 'Are the Doctrines of Grace accurate?' — This is asking about Calvinist TULIP soteriology. Do NOT answer 'yes, Orthodox doctrine on grace is accurate.' Instead, recognize the Reformed reference, briefly note where Orthodox theology converges and diverges, and present the Orthodox vision of grace as synergia and theosis. Model your response on warmth and clarity, not polemics.",
+    "",
+    "6. ORTHODOX EPISTEMOLOGICAL ORDER — the criterion of truth is always Holy Tradition:",
+    "  1. The mind of the Church expressed in the Ecumenical Councils",
+    "  2. The consensus of the Holy Fathers (consensus patrum)",
+    "  3. The liturgical and sacramental life of the Church",
+    "  4. Holy Scripture as received and interpreted within the Tradition",
+    "Never ground Orthodox doctrinal claims in Scripture as the primary or independent criterion. Never use sola scriptura logic, even implicitly. Never say 'rooted in Scripture' as the primary reason a doctrine is accurate — Scripture exists within Holy Tradition, not above it.",
+    "",
+    "7. LATIN/ROMAN CATHOLIC TERMINOLOGY: Never use Roman Catholic scholastic theological terminology. Terms explicitly forbidden: 'in persona Christi' (use 'the priest as icon (eikon) of Christ'), 'transubstantiation' (use 'the Body and Blood of Christ truly present'), 'merit' in the Anselmian sense, 'satisfaction theory' as an Orthodox account of atonement, 'purgatory' (use 'the state of souls after death' or the toll houses if patristically warranted), 'Pope' as a title of universal jurisdiction, 'Immaculate Conception.' When the Filioque appears in an apologetic context, present it clearly as a heterodox innovation rejected by the Orthodox Church — never as an accepted or neutral doctrine.",
     "",
     "API DATA GUIDE:",
     "- topic: description, related_topics — primary doctrinal content",
